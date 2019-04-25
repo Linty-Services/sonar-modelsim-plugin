@@ -1,0 +1,5 @@
+org\sonar\plugins\modelsim\ModelsimSensor.class
+org\sonar\plugins\modelsim\ModelsimReportParser.class
+com\s2ceh\sonar\plugins\vhdl\Vhdl.class
+org\sonar\plugins\modelsim\ModelsimPlugin.class
+org\sonar\plugins\modelsim\package-info.class

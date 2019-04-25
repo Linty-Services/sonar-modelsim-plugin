@@ -1,0 +1,6 @@
+projectKey=sonar_Modelsim
+serverUrl=http://localhost:9000
+serverVersion=6.7.6.38781
+dashboardUrl=http://localhost:9000/dashboard/index/sonar_Modelsim
+ceTaskId=AWjouCS0bLciDdlhPFLA
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWjouCS0bLciDdlhPFLA

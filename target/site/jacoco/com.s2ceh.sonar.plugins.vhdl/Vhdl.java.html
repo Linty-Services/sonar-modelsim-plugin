@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Vhdl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SonarQube Modelsim Plugin</a> &gt; <a href="index.source.html" class="el_package">com.s2ceh.sonar.plugins.vhdl</a> &gt; <span class="el_source">Vhdl.java</span></div><h1>Vhdl.java</h1><pre class="source lang-java linenums">package com.s2ceh.sonar.plugins.vhdl;
+
+import org.sonar.api.config.Settings;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+import java.util.Arrays;
+import org.sonar.api.resources.AbstractLanguage;
+
+/**
+ * VHDL language implementation
+ *
+ * @since 1.3
+ */
+public class Vhdl extends AbstractLanguage {
+
+  /**
+   * VHDL key
+   */
+  public static final String KEY = &quot;vhdl&quot;;
+
+  /**
+   * VHDL name
+   */
+  public static final String NAME = &quot;VHDL&quot;;
+
+  /**
+   * Key of the file suffix parameter
+   */
+  public static final String FILE_SUFFIXES_KEY = &quot;sonar.vhdl.file.suffixes&quot;;
+
+  /**
+   * Default VHDL files knows suffixes
+   */
+  public static final String DEFAULT_FILE_SUFFIXES = &quot;.vhdl,.vhd&quot;;
+
+  /**
+   * Settings of the plugin.
+   */
+  private final Settings settings;
+
+  /**
+   * Default constructor
+   */
+  public Vhdl(Settings settings) {
+<span class="nc" id="L45">    super(KEY, NAME);</span>
+<span class="nc" id="L46">    this.settings = settings;</span>
+<span class="nc" id="L47">  }</span>
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see org.sonar.api.resources.AbstractLanguage#getFileSuffixes()
+   */
+  @Override
+  public String[] getFileSuffixes() {
+<span class="nc bnc" id="L56" title="All 4 branches missed.">    String[] suffixes = Arrays.stream(settings.getStringArray(Vhdl.FILE_SUFFIXES_KEY)).filter(s -&gt; s != null &amp;&amp; !s.trim().isEmpty()).toArray(String[]::new);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">    if (suffixes.length == 0) {</span>
+<span class="nc" id="L58">      suffixes = Iterables.toArray(Splitter.on(',').split(DEFAULT_FILE_SUFFIXES), String.class);</span>
+    }
+<span class="nc" id="L60">    return suffixes;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

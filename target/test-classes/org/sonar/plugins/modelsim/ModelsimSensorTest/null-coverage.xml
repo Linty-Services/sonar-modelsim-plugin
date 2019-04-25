@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<coverage_report>
+<code_coverage_report
+lines="1"
+byFile="1">
+
+<fileData path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/bus_mux.vhd">
+</fileData>
+
+</code_coverage_report>
+</coverage_report>

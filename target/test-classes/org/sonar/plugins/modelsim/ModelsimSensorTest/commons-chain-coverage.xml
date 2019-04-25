@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<coverage_report>
+<code_coverage_report
+lines="1"
+byFile="1">
+
+<fileData path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/alu.vhd">
+<statements active="2" hits="1" percent="50.00"/>
+<stmt ln="31" st="1" hits="4961097"/>
+<stmt ln="35" st="1" hits="3307396"/>
+<branches active="13" hits="5" percent="38.46"/>
+</fileData>
+
+<fileData path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/bus_mux.vhd">
+<statements active="1" hits="1" percent="100.00"/>
+<stmt ln="50" st="1" hits="8268497"/>
+</fileData>
+
+</code_coverage_report>
+</coverage_report>
+
