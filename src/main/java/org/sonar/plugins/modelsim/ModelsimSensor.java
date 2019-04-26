@@ -31,9 +31,6 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.scan.filesystem.PathResolver;
-
-import com.s2ceh.sonar.plugins.vhdl.Vhdl;
-
 import java.io.File;
 
 public class ModelsimSensor implements Sensor {
@@ -53,7 +50,7 @@ public class ModelsimSensor implements Sensor {
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-	  descriptor.onlyOnLanguage(Vhdl.KEY).name("ModelsimSensor");
+	  descriptor.onlyOnLanguage("vhdl").name("ModelsimSensor");
   }
 
   @Override

@@ -31,46 +31,43 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.scan.filesystem.PathResolver;
-
-import com.s2ceh.sonar.plugins.vhdl.Vhdl;
-
 import java.io.File;
 
 public class ModelsimSensor implements Sensor {
 
-<span class="fc" id="L41">  private static final Logger LOGGER = LoggerFactory.getLogger(ModelsimSensor.class);</span>
+<span class="fc" id="L38">  private static final Logger LOGGER = LoggerFactory.getLogger(ModelsimSensor.class);</span>
 
   private FileSystem fs;
   private PathResolver pathResolver;
   private final Configuration configuration;
 
   public ModelsimSensor(FileSystem fs, PathResolver pathResolver, Settings settings,
-<span class="fc" id="L48">                          Configuration configuration) {</span>
-<span class="fc" id="L49">    this.fs = fs;</span>
-<span class="fc" id="L50">    this.pathResolver = pathResolver;</span>
-<span class="fc" id="L51">    this.configuration=configuration;</span>
-<span class="fc" id="L52">  }</span>
+<span class="fc" id="L45">                          Configuration configuration) {</span>
+<span class="fc" id="L46">    this.fs = fs;</span>
+<span class="fc" id="L47">    this.pathResolver = pathResolver;</span>
+<span class="fc" id="L48">    this.configuration=configuration;</span>
+<span class="fc" id="L49">  }</span>
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-<span class="fc" id="L56">	  descriptor.onlyOnLanguage(Vhdl.KEY).name(&quot;ModelsimSensor&quot;);</span>
-<span class="fc" id="L57">  }</span>
+<span class="fc" id="L53">	  descriptor.onlyOnLanguage(&quot;vhdl&quot;).name(&quot;ModelsimSensor&quot;);</span>
+<span class="fc" id="L54">  }</span>
 
   @Override
   public void execute(SensorContext context) {
-<span class="fc" id="L61">    String path=configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);</span>
-<span class="fc" id="L62">    File report = pathResolver.relativeFile(fs.baseDir(), path);</span>
-<span class="pc bpc" id="L63" title="5 of 6 branches missed.">    if (!report.isFile() || !report.exists() || !report.canRead()) {</span>
-<span class="fc" id="L64">      LOGGER.warn(&quot;Modelsim report not found at {}&quot;, report);</span>
+<span class="fc" id="L58">    String path=configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);</span>
+<span class="fc" id="L59">    File report = pathResolver.relativeFile(fs.baseDir(), path);</span>
+<span class="pc bpc" id="L60" title="5 of 6 branches missed.">    if (!report.isFile() || !report.exists() || !report.canRead()) {</span>
+<span class="fc" id="L61">      LOGGER.warn(&quot;Modelsim report not found at {}&quot;, report);</span>
     } else {
-<span class="nc" id="L66">      parseReport(report, context);</span>
+<span class="nc" id="L63">      parseReport(report, context);</span>
     }
-<span class="fc" id="L68">  }</span>
+<span class="fc" id="L65">  }</span>
 
   protected void parseReport(File xmlFile, SensorContext context) {
-<span class="fc" id="L71">    LOGGER.info(&quot;parsing {}&quot;, xmlFile);</span>
-<span class="fc" id="L72">    ModelsimReportParser.parseReport(xmlFile, context);</span>
-<span class="fc" id="L73">  }</span>
+<span class="fc" id="L68">    LOGGER.info(&quot;parsing {}&quot;, xmlFile);</span>
+<span class="fc" id="L69">    ModelsimReportParser.parseReport(xmlFile, context);</span>
+<span class="fc" id="L70">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

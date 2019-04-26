@@ -152,4 +152,11 @@ public class ModelsimSensorTest {
 	sensor.parseReport(badXml, context);
   }
 
+  @Test (expected = IllegalStateException.class)
+  public void testInvalidReport() throws URISyntaxException {
+	File badReport =  new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/wrong-coverage.xml").toURI());
+	when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
+	sensor.parseReport(badReport, context);
+  }
+
 }
