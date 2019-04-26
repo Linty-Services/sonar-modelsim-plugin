@@ -1,21 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelsimReportParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SonarQube Modelsim Plugin</a> &gt; <a href="index.source.html" class="el_package">org.sonar.plugins.modelsim</a> &gt; <span class="el_source">ModelsimReportParser.java</span></div><h1>ModelsimReportParser.java</h1><pre class="source lang-java linenums">/*
- * SonarQube Cobertura Plugin
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelsimReportParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SonarQube Modelsim Plugin</a> &gt; <a href="index.source.html" class="el_package">org.sonar.plugins.modelsim</a> &gt; <span class="el_source">ModelsimReportParser.java</span></div><h1>ModelsimReportParser.java</h1><pre class="source lang-java linenums"> /*
+ * sonar-coverage-modelsim plugin for Sonarqube &amp; Modelsim
+ * Copyright (C) 2019 Linty Services
+ * 
+ * Based on :
+ *  SonarQube Cobertura Plugin
  * Copyright (C) 2018-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
 package org.sonar.plugins.modelsim;
 
@@ -38,89 +41,89 @@ public class ModelsimReportParser {
 
   private final SensorContext context;
 
-<span class="fc" id="L41">  private ModelsimReportParser(SensorContext context) {</span>
-<span class="fc" id="L42">    this.context = context;</span>
-<span class="fc" id="L43">  }</span>
+<span class="fc" id="L44">  private ModelsimReportParser(SensorContext context) {</span>
+<span class="fc" id="L45">    this.context = context;</span>
+<span class="fc" id="L46">  }</span>
 
   /**
    * Parse a Modelsim xml report and create measures accordingly
    */
   public static void parseReport(File xmlFile, SensorContext context) {
-<span class="fc" id="L49">    new ModelsimReportParser(context).parse(xmlFile);</span>
-<span class="fc" id="L50">  }</span>
+<span class="fc" id="L52">    new ModelsimReportParser(context).parse(xmlFile);</span>
+<span class="fc" id="L53">  }</span>
 
   private void parse(File xmlFile) {
     try {
-<span class="fc" id="L54">      SMInputFactory inputFactory = initStax();</span>
-<span class="fc" id="L55">      SMHierarchicCursor rootCursor = inputFactory.rootElementCursor(xmlFile);</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">      while (rootCursor.getNext() != null) {</span>
-<span class="fc" id="L57">        collectReportMeasures(rootCursor.descendantElementCursor(&quot;code_coverage_report&quot;));</span>
+<span class="fc" id="L57">      SMInputFactory inputFactory = initStax();</span>
+<span class="fc" id="L58">      SMHierarchicCursor rootCursor = inputFactory.rootElementCursor(xmlFile);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">      while (rootCursor.getNext() != null) {</span>
+<span class="fc" id="L60">        collectReportMeasures(rootCursor.descendantElementCursor(&quot;code_coverage_report&quot;));</span>
       }
-<span class="fc" id="L59">      rootCursor.getStreamReader().closeCompletely();</span>
+<span class="fc" id="L62">      rootCursor.getStreamReader().closeCompletely();</span>
     }
-<span class="fc" id="L61">    catch (XMLStreamException e) {</span>
-<span class="fc" id="L62">      throw new IllegalStateException(&quot;XML is not valid&quot;, e);</span>
-<span class="fc" id="L63">    }</span>
-<span class="fc" id="L64">  }</span>
+<span class="fc" id="L64">    catch (XMLStreamException e) {</span>
+<span class="fc" id="L65">      throw new IllegalStateException(&quot;XML is not valid&quot;, e);</span>
+<span class="fc" id="L66">    }</span>
+<span class="fc" id="L67">  }</span>
 
   private static SMInputFactory initStax() {
-<span class="fc" id="L67">    final XMLInputFactory xmlFactory = XMLInputFactory.newInstance();</span>
-<span class="fc" id="L68">    xmlFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);</span>
-<span class="fc" id="L69">    xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.FALSE);</span>
-<span class="fc" id="L70">    xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);</span>
-<span class="fc" id="L71">    xmlFactory.setProperty(XMLInputFactory.IS_VALIDATING, Boolean.FALSE);</span>
-<span class="fc" id="L72">    return new SMInputFactory(xmlFactory);</span>
+<span class="fc" id="L70">    final XMLInputFactory xmlFactory = XMLInputFactory.newInstance();</span>
+<span class="fc" id="L71">    xmlFactory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);</span>
+<span class="fc" id="L72">    xmlFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, Boolean.FALSE);</span>
+<span class="fc" id="L73">    xmlFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);</span>
+<span class="fc" id="L74">    xmlFactory.setProperty(XMLInputFactory.IS_VALIDATING, Boolean.FALSE);</span>
+<span class="fc" id="L75">    return new SMInputFactory(xmlFactory);</span>
   }
 
   private void collectReportMeasures(SMInputCursor report) throws XMLStreamException {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">    while (report.getNext() != null) {</span>
-<span class="fc" id="L77">      collectFileMeasures(report.descendantElementCursor(&quot;fileData&quot;));</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">    while (report.getNext() != null) {</span>
+<span class="fc" id="L80">      collectFileMeasures(report.descendantElementCursor(&quot;fileData&quot;));</span>
     }
-<span class="fc" id="L79">  }</span>
+<span class="fc" id="L82">  }</span>
 
   private boolean resourceExists(InputFile file) {
-<span class="pc bpc" id="L82" title="1 of 4 branches missed.">    return file != null &amp;&amp; context.fileSystem().inputFile(context.fileSystem().predicates().is(file.file())) != null;</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">    return file != null &amp;&amp; context.fileSystem().inputFile(context.fileSystem().predicates().is(file.file())) != null;</span>
   }
 
   private void collectFileMeasures(SMInputCursor clazz) throws XMLStreamException {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">    while (clazz.getNext() != null) {</span>
-<span class="fc" id="L87">      String path = clazz.getAttrValue(&quot;path&quot;);</span>
-<span class="fc" id="L88">      collectFileData(clazz, path);</span>
-<span class="fc" id="L89">    }</span>
-<span class="fc" id="L90">  }</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    while (clazz.getNext() != null) {</span>
+<span class="fc" id="L90">      String path = clazz.getAttrValue(&quot;path&quot;);</span>
+<span class="fc" id="L91">      collectFileData(clazz, path);</span>
+<span class="fc" id="L92">    }</span>
+<span class="fc" id="L93">  }</span>
 
   private void collectFileData(SMInputCursor clazz, String path) throws XMLStreamException {
-<span class="fc" id="L93">    InputFile resource = context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));</span>
-<span class="fc" id="L94">    NewCoverage coverage = null;</span>
-<span class="fc" id="L95">    boolean lineAdded = false;</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">    if (resourceExists(resource)) {</span>
-<span class="fc" id="L97">      coverage = context.newCoverage();</span>
-<span class="fc" id="L98">      coverage.onFile(resource);</span>
+<span class="fc" id="L96">    InputFile resource = context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));</span>
+<span class="fc" id="L97">    NewCoverage coverage = null;</span>
+<span class="fc" id="L98">    boolean lineAdded = false;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">    if (resourceExists(resource)) {</span>
+<span class="fc" id="L100">      coverage = context.newCoverage();</span>
+<span class="fc" id="L101">      coverage.onFile(resource);</span>
     }
 
-<span class="fc" id="L101">    SMInputCursor statement = clazz.childElementCursor(&quot;stmt&quot;);</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">    while (statement.getNext() != null) {</span>
-<span class="fc" id="L103">      int lineId = Integer.parseInt(statement.getAttrValue(&quot;ln&quot;));</span>
+<span class="fc" id="L104">    SMInputCursor statement = clazz.childElementCursor(&quot;stmt&quot;);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">    while (statement.getNext() != null) {</span>
+<span class="fc" id="L106">      int lineId = Integer.parseInt(statement.getAttrValue(&quot;ln&quot;));</span>
       try {
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (coverage != null) {</span>
-<span class="fc" id="L106">          coverage.lineHits(lineId, (int) parseNumber(statement.getAttrValue(&quot;hits&quot;)));</span>
-<span class="fc" id="L107">          lineAdded = true;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (coverage != null) {</span>
+<span class="fc" id="L109">          coverage.lineHits(lineId, (int) parseNumber(statement.getAttrValue(&quot;hits&quot;)));</span>
+<span class="fc" id="L110">          lineAdded = true;</span>
         }
       }
-<span class="nc" id="L110">      catch (ParseException e) {</span>
-<span class="nc" id="L111">        throw new XMLStreamException(e);</span>
-<span class="fc" id="L112">      }</span>
+<span class="nc" id="L113">      catch (ParseException e) {</span>
+<span class="nc" id="L114">        throw new XMLStreamException(e);</span>
+<span class="fc" id="L115">      }</span>
     
-<span class="fc" id="L114">    }</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">    if (coverage != null) {</span>
+<span class="fc" id="L117">    }</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">    if (coverage != null) {</span>
       // If there was no lines covered or uncovered (e.g. everything is ignored), but the file exists then Sonar would report the file as uncovered
       // so adding a fake one to line number 1
-<span class="fc bfc" id="L118" title="All 2 branches covered.">      if (!lineAdded) {</span>
-<span class="fc" id="L119">        coverage.lineHits(1, 1);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">      if (!lineAdded) {</span>
+<span class="fc" id="L122">        coverage.lineHits(1, 1);</span>
       }
-<span class="fc" id="L121">      coverage.save();</span>
+<span class="fc" id="L124">      coverage.save();</span>
     }
-<span class="fc" id="L123">  }</span>
+<span class="fc" id="L126">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

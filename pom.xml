@@ -15,11 +15,10 @@
 
   <name>SonarQube Modelsim Plugin</name>
   <description>Code coverage analysis using Modelsim</description>
-  <url>https://github.com/galexandre/sonar-cobertura</url>
-  <inceptionYear>2018</inceptionYear>
+  <url>https://github.com/Linty-Services/sonar-coverage-modelsim</url>
+  <inceptionYear>2019</inceptionYear>
   <organization>
-    <name>SonarSource</name>
-    <url>http://www.sonarsource.com</url>
+    <name>Linty Services</name>
   </organization>
   <licenses>
     <license>
@@ -28,17 +27,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-
-  <scm>
-    <connection>scm:git:git@github.com:galexandre/sonar-cobertura.git</connection>
-    <developerConnection>scm:git:git@github.com:galexandre/sonar-cobertura.git</developerConnection>
-    <url>https://github.com/galexandre/sonar-cobertura/</url>
-    <tag>HEAD</tag>
-  </scm>
-  <issueManagement>
-    <system>GitHub Issues</system>
-    <url>https://github.com/galexandre/sonar-cobertura/issues</url>
-  </issueManagement>
 
   <properties>
     <license.title>SonarQube Modelsim Plugin</license.title>

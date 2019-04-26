@@ -1,21 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelsimSensor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SonarQube Modelsim Plugin</a> &gt; <a href="index.source.html" class="el_package">org.sonar.plugins.modelsim</a> &gt; <span class="el_source">ModelsimSensor.java</span></div><h1>ModelsimSensor.java</h1><pre class="source lang-java linenums">/*
- * SonarQube Cobertura Plugin
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ModelsimSensor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SonarQube Modelsim Plugin</a> &gt; <a href="index.source.html" class="el_package">org.sonar.plugins.modelsim</a> &gt; <span class="el_source">ModelsimSensor.java</span></div><h1>ModelsimSensor.java</h1><pre class="source lang-java linenums"> /*
+ * sonar-coverage-modelsim plugin for Sonarqube &amp; Modelsim
+ * Copyright (C) 2019 Linty Services
+ * 
+ * Based on :
+ *  SonarQube Cobertura Plugin
  * Copyright (C) 2018-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
 package org.sonar.plugins.modelsim;
 
@@ -35,39 +38,39 @@ import java.io.File;
 
 public class ModelsimSensor implements Sensor {
 
-<span class="fc" id="L38">  private static final Logger LOGGER = LoggerFactory.getLogger(ModelsimSensor.class);</span>
+<span class="fc" id="L41">  private static final Logger LOGGER = LoggerFactory.getLogger(ModelsimSensor.class);</span>
 
   private FileSystem fs;
   private PathResolver pathResolver;
   private final Configuration configuration;
 
   public ModelsimSensor(FileSystem fs, PathResolver pathResolver, Settings settings,
-<span class="fc" id="L45">                          Configuration configuration) {</span>
-<span class="fc" id="L46">    this.fs = fs;</span>
-<span class="fc" id="L47">    this.pathResolver = pathResolver;</span>
-<span class="fc" id="L48">    this.configuration=configuration;</span>
-<span class="fc" id="L49">  }</span>
+<span class="fc" id="L48">                          Configuration configuration) {</span>
+<span class="fc" id="L49">    this.fs = fs;</span>
+<span class="fc" id="L50">    this.pathResolver = pathResolver;</span>
+<span class="fc" id="L51">    this.configuration=configuration;</span>
+<span class="fc" id="L52">  }</span>
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-<span class="fc" id="L53">	  descriptor.onlyOnLanguage(Vhdl.KEY).name(&quot;ModelsimSensor&quot;);</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L56">	  descriptor.onlyOnLanguage(Vhdl.KEY).name(&quot;ModelsimSensor&quot;);</span>
+<span class="fc" id="L57">  }</span>
 
   @Override
   public void execute(SensorContext context) {
-<span class="fc" id="L58">    String path=configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);</span>
-<span class="fc" id="L59">    File report = pathResolver.relativeFile(fs.baseDir(), path);</span>
-<span class="pc bpc" id="L60" title="5 of 6 branches missed.">    if (!report.isFile() || !report.exists() || !report.canRead()) {</span>
-<span class="fc" id="L61">      LOGGER.warn(&quot;Modelsim report not found at {}&quot;, report);</span>
+<span class="fc" id="L61">    String path=configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);</span>
+<span class="fc" id="L62">    File report = pathResolver.relativeFile(fs.baseDir(), path);</span>
+<span class="pc bpc" id="L63" title="5 of 6 branches missed.">    if (!report.isFile() || !report.exists() || !report.canRead()) {</span>
+<span class="fc" id="L64">      LOGGER.warn(&quot;Modelsim report not found at {}&quot;, report);</span>
     } else {
-<span class="nc" id="L63">      parseReport(report, context);</span>
+<span class="nc" id="L66">      parseReport(report, context);</span>
     }
-<span class="fc" id="L65">  }</span>
+<span class="fc" id="L68">  }</span>
 
   protected void parseReport(File xmlFile, SensorContext context) {
-<span class="fc" id="L68">    LOGGER.info(&quot;parsing {}&quot;, xmlFile);</span>
-<span class="fc" id="L69">    ModelsimReportParser.parseReport(xmlFile, context);</span>
-<span class="fc" id="L70">  }</span>
+<span class="fc" id="L71">    LOGGER.info(&quot;parsing {}&quot;, xmlFile);</span>
+<span class="fc" id="L72">    ModelsimReportParser.parseReport(xmlFile, context);</span>
+<span class="fc" id="L73">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
