@@ -170,7 +170,6 @@
           <pluginName>Modelsim</pluginName>
           <pluginClass>org.sonar.plugins.modelsim.ModelsimPlugin</pluginClass>
           <pluginDescription><![CDATA[Get code coverage with Modelsim</a>.]]></pluginDescription>
-          <requirePlugins>java:5.1.0.13090</requirePlugins>
         </configuration>
       </plugin>
     </plugins>
