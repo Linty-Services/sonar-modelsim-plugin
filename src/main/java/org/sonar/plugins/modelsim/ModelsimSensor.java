@@ -56,17 +56,18 @@ public class ModelsimSensor implements Sensor {
   @Override
   public void execute(SensorContext context) {
     String path=configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);
+    String mode=configuration.get(ModelsimPlugin.MODELSIM_REPORT_MODE).orElse(null);
     File report = pathResolver.relativeFile(fs.baseDir(), path);
     if (!report.isFile() || !report.exists() || !report.canRead()) {
       LOGGER.warn("Modelsim report not found at {}", report);
     } else {
-      parseReport(report, context);
+      parseReport(report, context, mode);
     }
   }
 
-  protected void parseReport(File xmlFile, SensorContext context) {
+  protected void parseReport(File xmlFile, SensorContext context,String mode) {
     LOGGER.info("parsing {}", xmlFile);
-    ModelsimReportParser.parseReport(xmlFile, context);
+    ModelsimReportParser.parseReport(xmlFile, context, mode);
   }
 
 }

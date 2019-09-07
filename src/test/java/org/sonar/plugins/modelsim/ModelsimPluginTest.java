@@ -41,6 +41,6 @@ public class ModelsimPluginTest {
         SonarRuntime sonarRuntime = SonarRuntimeImpl.forSonarQube(VERSION_6_7, SonarQubeSide.SERVER);
         Plugin.Context context = new Plugin.Context(sonarRuntime);
         modelsimPlugin.define(context);
-        assertThat(context.getExtensions()).hasSize(2);
+        assertThat(context.getExtensions()).hasSize(3);
     }
 }

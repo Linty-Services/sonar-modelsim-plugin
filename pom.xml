@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>sonar-modelsim-plugin</artifactId>
-  <version>2.0</version>
+  <version>1.0</version>
   <packaging>sonar-plugin</packaging>
 
   <name>SonarQube Modelsim Plugin</name>
@@ -33,7 +33,7 @@
 	<license.skip>true</license.skip> <!-- There is no license header for now -->
     <sonar.version>6.7</sonar.version>
     <!--<sonar-java.version>5.1.0.13090</sonar-java.version>-->
-	<jacoco.version>0.7.5.201505241946</jacoco.version>
+	<jacoco.version>0.8.4</jacoco.version>
   </properties>
 
   <dependencies>

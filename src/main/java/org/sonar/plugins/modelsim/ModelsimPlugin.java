@@ -33,6 +33,8 @@ import java.util.List;
 public final class ModelsimPlugin implements Plugin{
 
   public static final String MODELSIM_REPORT_PATH_PROPERTY = "sonar.modelsim.reportPath";
+  
+  public static final String MODELSIM_REPORT_MODE = "branch";
 
   public List<Object> getExtensions() {
     return ImmutableList.of(
@@ -44,7 +46,14 @@ public final class ModelsimPlugin implements Plugin{
                     .defaultValue("report.txt.xml")
                     .onQualifiers(Qualifiers.PROJECT)
                     .build(),
-
+                    PropertyDefinition.builder(MODELSIM_REPORT_MODE)
+                    .category(CoreProperties.CATEGORY_CODE_COVERAGE)
+                    .subCategory("Modelsim")
+                    .name("Coverage type")
+                    .description("Type of secondary coverage : branch or condition (branch coverage will still be reported as condition coverage by Sonarqube interface). Statement coverage is always imported")
+                    .defaultValue("branch")
+                    .onQualifiers(Qualifiers.PROJECT)
+                    .build(),
             ModelsimSensor.class);
   }
 

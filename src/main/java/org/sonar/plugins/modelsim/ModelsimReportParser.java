@@ -29,9 +29,9 @@ import org.sonar.api.batch.fs.InputFile;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
-import java.text.ParseException;
 
 import javax.xml.stream.XMLInputFactory;
+
 import org.codehaus.staxmate.SMInputFactory;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import static org.sonar.api.utils.ParsingUtils.parseNumber;
@@ -41,6 +41,10 @@ public class ModelsimReportParser {
 
   private final SensorContext context;
 
+  private String mode;
+  
+  private NewCoverage coverage;
+  
   private ModelsimReportParser(SensorContext context) {
     this.context = context;
   }
@@ -48,11 +52,13 @@ public class ModelsimReportParser {
   /**
    * Parse a Modelsim xml report and create measures accordingly
    */
-  public static void parseReport(File xmlFile, SensorContext context) {
-    new ModelsimReportParser(context).parse(xmlFile);
+  public static void parseReport(File xmlFile, SensorContext context, String mode) {
+    new ModelsimReportParser(context).parse(xmlFile, mode);
   }
 
-  private void parse(File xmlFile) {
+  private void parse(File xmlFile, String mode) { 
+	this.mode=mode;
+	//System.out.println("mode : "+mode);
     try {
       SMInputFactory inputFactory = initStax();
       SMHierarchicCursor rootCursor = inputFactory.rootElementCursor(xmlFile);
@@ -94,27 +100,66 @@ public class ModelsimReportParser {
 
   private void collectFileData(SMInputCursor clazz, String path) throws XMLStreamException {
     InputFile resource = context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));
-    NewCoverage coverage = null;
+    coverage = null;
     boolean lineAdded = false;
     if (resourceExists(resource)) {
       coverage = context.newCoverage();
       coverage.onFile(resource);
     }
 
-    SMInputCursor statement = clazz.childElementCursor("stmt");
-    while (statement.getNext() != null) {
-      int lineId = Integer.parseInt(statement.getAttrValue("ln"));
-      try {
-        if (coverage != null) {
-          coverage.lineHits(lineId, (int) parseNumber(statement.getAttrValue("hits")));
-          lineAdded = true;
-        }
+    SMInputCursor element = clazz.childCursor();
+    while (element.getNext() != null) {
+     String name=null;
+     try {
+    	 name=element.getPrefixedName();  	 
+     }
+     catch (Exception e) {}
+     if (mode.equalsIgnoreCase("condition")&&name!=null&&name.equalsIgnoreCase("condition")) {
+         try {
+   	      if (coverage != null) {
+   	    	int ln = Integer.parseInt(element.getAttrValue("ln"));
+   	    	coverage.lineHits(ln, 1);
+   	        coverage.conditions(ln, Integer.parseInt(element.getAttrValue("active")), Integer.parseInt(element.getAttrValue("hits")));
+   	        lineAdded = true;
+   	      }
+         }
+         catch (Exception e) {
+          // throw new XMLStreamException(e);
+         }
+     }
+     else if (mode.equalsIgnoreCase("branch")&&name!=null&&(name.equalsIgnoreCase("case")||name.equalsIgnoreCase("if"))) {
+         try {
+          int active = Integer.parseInt(element.getAttrValue("active")); 
+          int hits = Integer.parseInt(element.getAttrValue("hits"));
+   	      if (coverage != null) {
+   	    	SMInputCursor child = element.childCursor(); 
+   	    	child.getNext();
+   	    	child.getNext();
+   	    	int ln = Integer.parseInt(child.getAttrValue("ln"));
+   	        coverage.lineHits(ln, 1);
+   	        coverage.conditions(ln, active, hits);
+   	        lineAdded = true;
+   	      }
+         }
+         catch (Exception e) {
+          // throw new XMLStreamException(e);
+         }
+     }
+      else if (name!=null&&name.equalsIgnoreCase("stmt")) {
+	      try {
+	    	int ln = Integer.parseInt(element.getAttrValue("ln"));
+	        if (coverage != null) {
+	          coverage.lineHits(ln, (int) parseNumber(element.getAttrValue("hits")));
+	          lineAdded = true;
+	        }
+	      }
+	      catch (Exception e) {
+	        throw new XMLStreamException(e);
+	      }
       }
-      catch (ParseException e) {
-        throw new XMLStreamException(e);
-      }
-    
     }
+
+    
     if (coverage != null) {
       // If there was no lines covered or uncovered (e.g. everything is ignored), but the file exists then Sonar would report the file as uncovered
       // so adding a fake one to line number 1
