@@ -50,7 +50,7 @@ public class ModelsimSensor implements Sensor {
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-	  descriptor.onlyOnLanguage("vhdl").name("ModelsimSensor");
+	  descriptor.name("ModelsimSensor");
   }
 
   @Override
