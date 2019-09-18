@@ -141,7 +141,6 @@ public class ModelsimSensorTest {
     when(descriptor.onlyOnFileType(any(Type.class))).thenReturn(descriptor);
     sensor.describe(descriptor );
 
-    verify(descriptor).onlyOnLanguage("vhdl");
     verify(descriptor).name("ModelsimSensor");
     verifyNoMoreInteractions(descriptor);
   }

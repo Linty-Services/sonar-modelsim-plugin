@@ -21,4 +21,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@javax.annotation.ParametersAreNonnullByDefault package org.sonar.plugins.modelsim;
+package org.sonar.plugins.modelsim;
