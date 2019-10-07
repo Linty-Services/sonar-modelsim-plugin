@@ -34,7 +34,7 @@ public final class ModelsimPlugin implements Plugin{
 
   public static final String MODELSIM_REPORT_PATH_PROPERTY = "sonar.modelsim.reportPath";
   
-  public static final String MODELSIM_REPORT_MODE = "branch";
+  public static final String MODELSIM_REPORT_MODE = "sonar.modelsim.modelsimReportMode";
 
   public List<Object> getExtensions() {
     return ImmutableList.of(
