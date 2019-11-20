@@ -6,6 +6,10 @@
 This plugin allows to import Modelsim xml reports data in Sonarqube.
 
 ## Usage
+
+### Compilation process
+
+This plugin can be built with the mvn clean package install command.
  
 ### Generating coverage report
 Coverage reports must be generated in Modelsim with Tools->Coverage Report->Text. The "XML format" box must be ticked. Code coverage->Statements and Code coverage->Branches or Code coverage->Conditions must be enabled according to what type of coverage needs to be imported. "Condition/Expression tables" option is necessary for importing condition coverage.
