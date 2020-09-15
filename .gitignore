@@ -1,2 +1,4 @@
 /target/
 /sonar-project.properties
+/.scannerwork
+/.settings
