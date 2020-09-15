@@ -2,3 +2,5 @@
 /sonar-project.properties
 /.scannerwork
 /.settings
+.classpath
+.project
