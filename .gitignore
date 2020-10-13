@@ -1,7 +1,7 @@
-/target/
-/sonar-project.properties
-/.scannerwork
-/.settings
+target
+sonar-project.properties
+.scannerwork
+.settings
 .classpath
 .project
 .idea
