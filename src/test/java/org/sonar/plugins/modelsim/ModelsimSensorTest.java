@@ -1,22 +1,22 @@
- /*
+/*
  * sonar-coverage-modelsim plugin for Sonarqube & Modelsim
  * Copyright (C) 2019 Linty Services
- * 
+ *
  * Based on :
  *  SonarQube Cobertura Plugin
  * Copyright (C) 2018-2016 SonarSource SA
  * mailto:contact AT sonarsource DOT com
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,15 +41,19 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ModelsimSensorTest {
 
   private ModelsimSensor sensor;
-  
+
   private MapSettings settings;
   @Mock
   private SensorContext context;
@@ -71,7 +75,7 @@ public class ModelsimSensorTest {
   @Before
   public void setUp() {
     initMocks(this);
-    Configuration configuration=new MapSettings().asConfig();
+    Configuration configuration = new MapSettings().asConfig();
     settings = new MapSettings();
     sensor = new ModelsimSensor(fs, pathResolver, settings, configuration);
 
@@ -87,7 +91,7 @@ public class ModelsimSensorTest {
   @Test
   public void shouldNotFailIfReportNotSpecifiedOrNotFound() throws URISyntaxException {
     when(pathResolver.relativeFile(any(File.class), anyString()))
-            .thenReturn(new File("notFound.xml"));
+      .thenReturn(new File("notFound.xml"));
 
     settings.setProperty(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY, "notFound.xml");
     sensor.execute(context);
@@ -96,19 +100,19 @@ public class ModelsimSensorTest {
     File report = getCoverageReport();
     settings.setProperty(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY, report.getParent());
     when(pathResolver.relativeFile(any(File.class), anyString()))
-            .thenReturn(report.getParentFile().getParentFile());
+      .thenReturn(report.getParentFile().getParentFile());
     sensor.execute(context);
   }
 
   @Test
   public void collectFileLineCoverage() throws URISyntaxException {
-	 
-	when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
-	sensor.parseReport(getCoverageReport(), context,"branch");
+
+    when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
+    sensor.parseReport(getCoverageReport(), context, "branch");
     verify(context, times(2)).newCoverage();
     verify(newCoverage, times(2)).onFile(inputFile);
-    verify(newCoverage).lineHits(31,4961097);
-    verify(newCoverage).lineHits(35,3307396);
+    verify(newCoverage).lineHits(31, 4961097);
+    verify(newCoverage).lineHits(35, 3307396);
     verify(newCoverage, times(2)).save();
   }
 
@@ -116,17 +120,17 @@ public class ModelsimSensorTest {
   @Test
   public void testDoNotSaveMeasureOnResourceWhichDoesntExistInTheContext() throws URISyntaxException {
     when(fs.inputFile(predicate)).thenReturn(null);
-    sensor.parseReport(getCoverageReport(), context,"branch");
+    sensor.parseReport(getCoverageReport(), context, "branch");
     verify(context, never()).newCoverage();
   }
 
   @Test
   public void vhdlFileHasNoCoverageSoAddedAFakeOneToShowAsCovered() throws URISyntaxException {
-	File nullCoverage =  new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/null-coverage.xml").toURI());
-	when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
-	sensor.parseReport(nullCoverage, context,"branch");
+    File nullCoverage = new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/null-coverage.xml").toURI());
+    when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
+    sensor.parseReport(nullCoverage, context, "branch");
     verify(newCoverage, times(1)).onFile(inputFile);
-    verify(newCoverage).lineHits(1,1);
+    verify(newCoverage).lineHits(1, 1);
     verify(newCoverage, times(1)).save();
   }
 
@@ -139,16 +143,16 @@ public class ModelsimSensorTest {
     SensorDescriptor descriptor = mock(SensorDescriptor.class);
     when(descriptor.onlyOnLanguage(anyString())).thenReturn(descriptor);
     when(descriptor.onlyOnFileType(any(Type.class))).thenReturn(descriptor);
-    sensor.describe(descriptor );
+    sensor.describe(descriptor);
 
     verify(descriptor).name("ModelsimSensor");
     verifyNoMoreInteractions(descriptor);
   }
-  
-  @Test (expected = IllegalStateException.class)
+
+  @Test(expected = IllegalStateException.class)
   public void testInvalidXml() throws URISyntaxException {
-	File badXml =  new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/badFile.xml").toURI());
-	sensor.parseReport(badXml, context,"branch");
+    File badXml = new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/badFile.xml").toURI());
+    sensor.parseReport(badXml, context, "branch");
   }
 
   /*@Test (expected = IllegalStateException.class)

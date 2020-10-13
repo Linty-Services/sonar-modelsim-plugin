@@ -1,40 +1,42 @@
 <?xml version="1.0"?>
 <coverage_report>
-<code_coverage_report
-lines="1"
-byFile="1">
+  <code_coverage_report
+      lines="1"
+      byFile="1">
 
-<fileData path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/alu.vhd">
-<statements active="2" hits="1" percent="50.00"/>
-<stmt ln="31" st="1" hits="4961097"/>
-<stmt ln="35" st="1" hits="3307396"/>
-<branches active="13" hits="5" percent="38.46"/>
-</fileData>
+    <fileData
+        path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/alu.vhd">
+      <statements active="2" hits="1" percent="50.00"/>
+      <stmt ln="31" st="1" hits="4961097"/>
+      <stmt ln="35" st="1" hits="3307396"/>
+      <branches active="13" hits="5" percent="38.46"/>
+    </fileData>
 
-<fileData path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/bus_mux.vhd">
-<statements active="1" hits="1" percent="100.00"/>
-<stmt ln="50" st="1" hits="8268497"/>
-<branches active="13" hits="3" percent="23.07"/>
-<if hasElse="1" active="2" hits="1" percent="50.00">
-<ielem ln="34" st="1" true="0" false="1"/>
-<ielem ln="36" st="1" true="1" false="0"/>
-</if>
-<if hasElse="1" active="2" hits="1" percent="50.00">
-<ielem ln="39" st="1" true="0" false="1"/>
-<ielem ln="41" st="1" true="1" false="0"/>
-</if>
-<case active="9" hits="1" percent="11.11">
-<celem ln="48" st="1" hits="0"/>
-<celem ln="48" st="2" hits="0"/>
-<celem ln="50" st="1" hits="0"/>
-<celem ln="52" st="1" hits="0"/>
-<celem ln="54" st="1" hits="0"/>
-<celem ln="56" st="1" hits="0"/>
-<celem ln="58" st="1" hits="0"/>
-<celem ln="60" st="1" hits="0"/>
-<celem ln="62" st="1" hits="1"/>
-</case>
-</fileData>
-</code_coverage_report>
+    <fileData
+        path="D:/Stage/2018-001-test_coverage_sonarqube/root/WorkSpaceMentor/plasma/plasma_custom/dev/src/cpu/bus_mux.vhd">
+      <statements active="1" hits="1" percent="100.00"/>
+      <stmt ln="50" st="1" hits="8268497"/>
+      <branches active="13" hits="3" percent="23.07"/>
+      <if hasElse="1" active="2" hits="1" percent="50.00">
+        <ielem ln="34" st="1" true="0" false="1"/>
+        <ielem ln="36" st="1" true="1" false="0"/>
+      </if>
+      <if hasElse="1" active="2" hits="1" percent="50.00">
+        <ielem ln="39" st="1" true="0" false="1"/>
+        <ielem ln="41" st="1" true="1" false="0"/>
+      </if>
+      <case active="9" hits="1" percent="11.11">
+        <celem ln="48" st="1" hits="0"/>
+        <celem ln="48" st="2" hits="0"/>
+        <celem ln="50" st="1" hits="0"/>
+        <celem ln="52" st="1" hits="0"/>
+        <celem ln="54" st="1" hits="0"/>
+        <celem ln="56" st="1" hits="0"/>
+        <celem ln="58" st="1" hits="0"/>
+        <celem ln="60" st="1" hits="0"/>
+        <celem ln="62" st="1" hits="1"/>
+      </case>
+    </fileData>
+  </code_coverage_report>
 </coverage_report>
 

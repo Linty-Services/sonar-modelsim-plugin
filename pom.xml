@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
     <version>36</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <artifactId>sonar-modelsim-plugin</artifactId>
@@ -30,10 +31,10 @@
 
   <properties>
     <license.title>SonarQube Modelsim Plugin</license.title>
-	<license.skip>true</license.skip> <!-- There is no license header for now -->
+    <license.skip>true</license.skip> <!-- There is no license header for now -->
     <sonar.version>6.7</sonar.version>
     <!--<sonar-java.version>5.1.0.13090</sonar-java.version>-->
-	<jacoco.version>0.8.4</jacoco.version>
+    <jacoco.version>0.8.4</jacoco.version>
   </properties>
 
   <dependencies>
@@ -108,15 +109,15 @@
       <version>1.9.5</version>
       <scope>test</scope>
     </dependency>
-      <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-      <dependency>
-          <groupId>org.mockito</groupId>
-          <artifactId>mockito-core</artifactId>
-          <version>2.13.0</version>
-          <scope>test</scope>
-      </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.13.0</version>
+      <scope>test</scope>
+    </dependency>
 
-      <dependency>
+    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>0.9.30</version>
@@ -135,7 +136,7 @@
       </testResource>
     </testResources>
     <plugins>
-     <plugin>
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${jacoco.version}</version>
