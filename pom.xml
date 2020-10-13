@@ -12,16 +12,14 @@
 
   <artifactId>sonar-coverage-modelsim-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
-  <name>SonarQube Linty Modelsim :: Plugin</name>
+  <name>Linty SonarQube Plugin: Coverage with ModelSim</name>
   <version>1.0</version>
-  <description>SonarQube plugin: Code coverage analysis using Modelsim</description>
   <url>https://www.linty-services.com</url>
 
   <properties>
-    <license.title>SonarQube Modelsim Plugin</license.title>
-    <license.skip>true</license.skip> <!-- There is no license header for now -->
+    <license.owner>Linty Services</license.owner>
+    <license.mailto>mailto:contact@linty-services.com</license.mailto>
     <sonar.version>6.7</sonar.version>
-    <!--<sonar-java.version>5.1.0.13090</sonar-java.version>-->
     <jacoco.version>0.8.4</jacoco.version>
     <sonar.host.url>https://sonar.linty-services.com</sonar.host.url>
   </properties>
