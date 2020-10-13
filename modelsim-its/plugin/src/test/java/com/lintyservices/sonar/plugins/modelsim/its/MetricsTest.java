@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package com.lintyservices.sonar.modelsim.its;
+package com.lintyservices.sonar.plugins.modelsim.its;
 
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.SonarScanner;
@@ -34,7 +34,7 @@ public class MetricsTest {
   @ClassRule
   public static final Orchestrator orchestrator = Tests.ORCHESTRATOR;
 
-  private static final String PROJECT_KEY = "coverage-modelsim-metrics";
+  private static final String PROJECT_KEY = "modelsim-metrics";
 
   @BeforeClass
   public static void init() {

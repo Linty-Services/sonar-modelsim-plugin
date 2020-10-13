@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package com.lintyservices.sonar.modelsim.its;
+package com.lintyservices.sonar.plugins.modelsim.its;
 
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.SonarScanner;
@@ -46,7 +46,7 @@ public class Tests {
   @ClassRule
   public static final Orchestrator ORCHESTRATOR = Orchestrator.builderEnv()
     .setSonarVersion(System.getProperty("sonar.runtimeVersion", "DEV"))
-    .addPlugin(FileLocation.byWildcardMavenFilename(new File("../../sonar-coverage-modelsim-plugin/target"), "sonar-coverage-modelsim-plugin-*.jar"))
+    .addPlugin(FileLocation.byWildcardMavenFilename(new File("../../sonar-modelsim-plugin/target"), "sonar-modelsim-plugin-*.jar"))
     .build();
 
   public static SonarScanner createSonarScannerBuild() {

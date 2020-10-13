@@ -1,4 +1,4 @@
-# Sonar-coverage-modelsim plugin for Sonarqube & Modelsim
+# sonar-modelsim-plugin for Sonarqube & Modelsim
 ===============
 
 ## Feature

@@ -55,8 +55,8 @@ jobs:
         with:
           name: plugin
           path: |
-            sonar-coverage-modelsim-plugin/target/sonar-coverage-modelsim-plugin-*.jar
-            !sonar-coverage-modelsim-plugin/target/sonar-coverage-modelsim-plugin-*-sources.jar
+            sonar-modelsim-plugin/target/sonar-modelsim-plugin-*.jar
+            !sonar-modelsim-plugin/target/sonar-modelsim-plugin-*-sources.jar
 
       - name: Commit, Push and Tag Release Version ${{ github.event.inputs.release_version }}
         if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '7.9.4'
@@ -102,7 +102,7 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: Latest build from master
-          files: sonar-coverage-modelsim-plugin-*.jar
+          files: sonar-modelsim-plugin-*.jar
 
   release:
     name: GitHub Release
@@ -121,4 +121,4 @@ jobs:
           automatic_release_tag: ${{ github.event.inputs.release_version }}
           prerelease: false
           title: ${{ github.event.inputs.release_version }}
-          files: sonar-coverage-modelsim-plugin-*.jar
+          files: sonar-modelsim-plugin-*.jar
