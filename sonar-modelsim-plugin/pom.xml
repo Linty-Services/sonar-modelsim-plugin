@@ -60,7 +60,7 @@
         <artifactId>sonar-packaging-maven-plugin</artifactId>
         <configuration>
           <pluginName>ModelSim</pluginName>
-          <pluginClass>com.lintyservices.sonar.plugins.modelsim.ModelsimPlugin</pluginClass>
+          <pluginClass>com.lintyservices.sonar.plugins.modelsim.ModelSimPlugin</pluginClass>
           <sonarQubeMinVersion>${sonar.version}</sonarQubeMinVersion>
         </configuration>
       </plugin>

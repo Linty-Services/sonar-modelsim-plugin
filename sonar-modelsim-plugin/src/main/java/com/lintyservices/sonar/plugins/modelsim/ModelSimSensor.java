@@ -31,16 +31,15 @@ import org.sonar.api.scan.filesystem.PathResolver;
 
 import java.io.File;
 
-public class ModelsimSensor implements Sensor {
+public class ModelSimSensor implements Sensor {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ModelsimSensor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ModelSimSensor.class);
 
   private FileSystem fs;
   private PathResolver pathResolver;
   private final Configuration configuration;
 
-  public ModelsimSensor(FileSystem fs, PathResolver pathResolver, Settings settings,
-                        Configuration configuration) {
+  public ModelSimSensor(FileSystem fs, PathResolver pathResolver, Settings settings, Configuration configuration) {
     this.fs = fs;
     this.pathResolver = pathResolver;
     this.configuration = configuration;
@@ -48,16 +47,16 @@ public class ModelsimSensor implements Sensor {
 
   @Override
   public void describe(SensorDescriptor descriptor) {
-    descriptor.name("ModelsimSensor");
+    descriptor.name("ModelSimSensor");
   }
 
   @Override
   public void execute(SensorContext context) {
-    String path = configuration.get(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY).orElse(null);
-    String mode = configuration.get(ModelsimPlugin.MODELSIM_REPORT_MODE).orElse(null);
+    String path = configuration.get(ModelSimPlugin.MODELSIM_REPORT_PATH).orElse(null);
+    String mode = configuration.get(ModelSimPlugin.MODELSIM_REPORT_MODE).orElse(null);
     File report = pathResolver.relativeFile(fs.baseDir(), path);
     if (!report.isFile() || !report.exists() || !report.canRead()) {
-      LOGGER.warn("Modelsim report not found at {}", report);
+      LOGGER.warn("ModelSim report not found at {}", report);
     } else {
       parseReport(report, context, mode);
     }
@@ -65,7 +64,7 @@ public class ModelsimSensor implements Sensor {
 
   protected void parseReport(File xmlFile, SensorContext context, String mode) {
     LOGGER.info("parsing {}", xmlFile);
-    ModelsimReportParser.parseReport(xmlFile, context, mode);
+    ModelSimReportParser.parseReport(xmlFile, context, mode);
   }
 
 }

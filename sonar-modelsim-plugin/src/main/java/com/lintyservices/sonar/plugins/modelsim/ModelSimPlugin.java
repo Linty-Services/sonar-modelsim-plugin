@@ -27,31 +27,34 @@ import org.sonar.api.resources.Qualifiers;
 
 import java.util.List;
 
-public final class ModelsimPlugin implements Plugin {
+public final class ModelSimPlugin implements Plugin {
 
-  public static final String MODELSIM_REPORT_PATH_PROPERTY = "sonar.modelsim.reportPath";
+  public static final String MODELSIM_REPORT_PATH = "sonar.modelsim.reportPath";
 
   public static final String MODELSIM_REPORT_MODE = "sonar.modelsim.modelsimReportMode";
 
+  private static final String MODELSIM_SUB_CATEGORY = "ModelSim";
+
   public List<Object> getExtensions() {
     return ImmutableList.of(
-      PropertyDefinition.builder(MODELSIM_REPORT_PATH_PROPERTY)
+      PropertyDefinition.builder(MODELSIM_REPORT_PATH)
         .category(CoreProperties.CATEGORY_CODE_COVERAGE)
-        .subCategory("Modelsim")
+        .subCategory(MODELSIM_SUB_CATEGORY)
         .name("Report path")
-        .description("Path (absolute or relative) to Modelsim xml report file.")
+        .description("Path (absolute or relative) to ModelSim XML report file.")
         .defaultValue("report.txt.xml")
         .onQualifiers(Qualifiers.PROJECT)
         .build(),
       PropertyDefinition.builder(MODELSIM_REPORT_MODE)
         .category(CoreProperties.CATEGORY_CODE_COVERAGE)
-        .subCategory("Modelsim")
+        .subCategory(MODELSIM_SUB_CATEGORY)
         .name("Coverage type")
-        .description("Type of secondary coverage : branch or condition (branch coverage will still be reported as condition coverage by Sonarqube interface). Statement coverage is always imported")
+        .description("Type of secondary coverage: 'branch' or 'condition' (branch coverage will still be reported as"
+          + " condition coverage on the Sonarqube web interface). Statement coverage is always imported.")
         .defaultValue("branch")
         .onQualifiers(Qualifiers.PROJECT)
         .build(),
-      ModelsimSensor.class);
+      ModelSimSensor.class);
   }
 
   @Override

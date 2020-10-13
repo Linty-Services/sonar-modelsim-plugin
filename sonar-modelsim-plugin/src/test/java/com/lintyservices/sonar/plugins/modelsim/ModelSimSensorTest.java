@@ -47,9 +47,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ModelsimSensorTest {
+public class ModelSimSensorTest {
 
-  private ModelsimSensor sensor;
+  private ModelSimSensor sensor;
 
   private MapSettings settings;
   @Mock
@@ -74,7 +74,7 @@ public class ModelsimSensorTest {
     initMocks(this);
     Configuration configuration = new MapSettings().asConfig();
     settings = new MapSettings();
-    sensor = new ModelsimSensor(fs, pathResolver, settings, configuration);
+    sensor = new ModelSimSensor(fs, pathResolver, settings, configuration);
 
     when(context.fileSystem()).thenReturn(fs);
     when(fs.predicates()).thenReturn(predicates);
@@ -90,12 +90,12 @@ public class ModelsimSensorTest {
     when(pathResolver.relativeFile(any(File.class), anyString()))
       .thenReturn(new File("notFound.xml"));
 
-    settings.setProperty(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY, "notFound.xml");
+    settings.setProperty(ModelSimPlugin.MODELSIM_REPORT_PATH, "notFound.xml");
     sensor.execute(context);
 
 
     File report = getCoverageReport();
-    settings.setProperty(ModelsimPlugin.MODELSIM_REPORT_PATH_PROPERTY, report.getParent());
+    settings.setProperty(ModelSimPlugin.MODELSIM_REPORT_PATH, report.getParent());
     when(pathResolver.relativeFile(any(File.class), anyString()))
       .thenReturn(report.getParentFile().getParentFile());
     sensor.execute(context);
@@ -123,7 +123,7 @@ public class ModelsimSensorTest {
 
   @Test
   public void vhdlFileHasNoCoverageSoAddedAFakeOneToShowAsCovered() throws URISyntaxException {
-    File nullCoverage = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelsimSensorTest/null-coverage.xml").toURI());
+    File nullCoverage = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/null-coverage.xml").toURI());
     when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
     sensor.parseReport(nullCoverage, context, "branch");
     verify(newCoverage, times(1)).onFile(inputFile);
@@ -132,7 +132,7 @@ public class ModelsimSensorTest {
   }
 
   private File getCoverageReport() throws URISyntaxException {
-    return new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelsimSensorTest/commons-chain-coverage.xml").toURI());
+    return new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/commons-chain-coverage.xml").toURI());
   }
 
   @Test
@@ -142,16 +142,17 @@ public class ModelsimSensorTest {
     when(descriptor.onlyOnFileType(any(Type.class))).thenReturn(descriptor);
     sensor.describe(descriptor);
 
-    verify(descriptor).name("ModelsimSensor");
+    verify(descriptor).name("ModelSimSensor");
     verifyNoMoreInteractions(descriptor);
   }
 
   @Test(expected = IllegalStateException.class)
   public void testInvalidXml() throws URISyntaxException {
-    File badXml = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelsimSensorTest/badFile.xml").toURI());
+    File badXml = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/badFile.xml").toURI());
     sensor.parseReport(badXml, context, "branch");
   }
 
+  // FIXME: Fix this test or remove it
   /*@Test (expected = IllegalStateException.class)
   public void testInvalidReport() throws URISyntaxException {
 	File badReport =  new File(getClass().getResource("/org/sonar/plugins/modelsim/ModelsimSensorTest/wrong-coverage.xml").toURI());

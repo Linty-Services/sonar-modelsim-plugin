@@ -32,7 +32,7 @@ import java.io.File;
 
 import static org.sonar.api.utils.ParsingUtils.parseNumber;
 
-public class ModelsimReportParser {
+public class ModelSimReportParser {
 
   private final SensorContext context;
 
@@ -40,20 +40,16 @@ public class ModelsimReportParser {
 
   private NewCoverage coverage;
 
-  private ModelsimReportParser(SensorContext context) {
+  private ModelSimReportParser(SensorContext context) {
     this.context = context;
   }
 
-  /**
-   * Parse a Modelsim xml report and create measures accordingly
-   */
   public static void parseReport(File xmlFile, SensorContext context, String mode) {
-    new ModelsimReportParser(context).parse(xmlFile, mode);
+    new ModelSimReportParser(context).parse(xmlFile, mode);
   }
 
   private void parse(File xmlFile, String mode) {
     this.mode = mode;
-    //System.out.println("mode : "+mode);
     try {
       SMInputFactory inputFactory = initStax();
       SMHierarchicCursor rootCursor = inputFactory.rootElementCursor(xmlFile);
@@ -107,8 +103,9 @@ public class ModelsimReportParser {
       try {
         name = element.getPrefixedName();
       } catch (Exception e) {
+        // FIXME: handle or rethrow exception
       }
-      if (mode.equalsIgnoreCase("condition") && name != null && name.equalsIgnoreCase("condition")) {
+      if ("condition".equalsIgnoreCase(mode) && "condition".equalsIgnoreCase(name)) {
         try {
           if (coverage != null) {
             int ln = Integer.parseInt(element.getAttrValue("ln"));
@@ -117,9 +114,10 @@ public class ModelsimReportParser {
             lineAdded = true;
           }
         } catch (Exception e) {
+          // FIXME: handle or rethrow exception
           // throw new XMLStreamException(e);
         }
-      } else if (mode.equalsIgnoreCase("branch") && name != null && (name.equalsIgnoreCase("case") || name.equalsIgnoreCase("if"))) {
+      } else if ("branch".equalsIgnoreCase(mode) && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
         try {
           int active = Integer.parseInt(element.getAttrValue("active"));
           int hits = Integer.parseInt(element.getAttrValue("hits"));
@@ -133,9 +131,10 @@ public class ModelsimReportParser {
             lineAdded = true;
           }
         } catch (Exception e) {
+          // FIXME: handle or rethrow exception
           // throw new XMLStreamException(e);
         }
-      } else if (name != null && name.equalsIgnoreCase("stmt")) {
+      } else if ("stmt".equalsIgnoreCase(name)) {
         try {
           int ln = Integer.parseInt(element.getAttrValue("ln"));
           if (coverage != null) {
@@ -148,7 +147,6 @@ public class ModelsimReportParser {
       }
     }
 
-
     if (coverage != null) {
       // If there was no lines covered or uncovered (e.g. everything is ignored), but the file exists then Sonar would report the file as uncovered
       // so adding a fake one to line number 1
@@ -158,5 +156,4 @@ public class ModelsimReportParser {
       coverage.save();
     }
   }
-
 }

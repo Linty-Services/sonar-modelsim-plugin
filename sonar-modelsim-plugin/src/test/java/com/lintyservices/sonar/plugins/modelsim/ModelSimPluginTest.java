@@ -28,10 +28,10 @@ import org.sonar.api.utils.Version;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class ModelsimPluginTest {
+public class ModelSimPluginTest {
 
   private static final Version VERSION_6_7 = Version.create(6, 7);
-  private ModelsimPlugin modelsimPlugin = new ModelsimPlugin();
+  private ModelSimPlugin modelsimPlugin = new ModelSimPlugin();
 
   @Test
   public void testGetExtensions() {
