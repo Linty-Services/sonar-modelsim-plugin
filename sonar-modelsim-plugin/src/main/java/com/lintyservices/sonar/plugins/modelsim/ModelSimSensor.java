@@ -52,8 +52,8 @@ public class ModelSimSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    String path = configuration.get(ModelSimPlugin.MODELSIM_REPORT_PATH).orElse(null);
-    String mode = configuration.get(ModelSimPlugin.MODELSIM_REPORT_MODE).orElse(null);
+    String path = configuration.get(ModelSimPlugin.REPORT_PATH).orElse(null);
+    String mode = configuration.get(ModelSimPlugin.ADDITIONAL_REPORT_TYPE).orElse(null);
     File report = pathResolver.relativeFile(fs.baseDir(), path);
     if (!report.isFile() || !report.exists() || !report.canRead()) {
       LOGGER.warn("ModelSim report not found at {}", report);

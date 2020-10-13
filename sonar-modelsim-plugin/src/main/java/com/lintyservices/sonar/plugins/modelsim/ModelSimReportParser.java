@@ -36,9 +36,7 @@ public class ModelSimReportParser {
 
   private final SensorContext context;
 
-  private String mode;
-
-  private NewCoverage coverage;
+  private String additionalReportType;
 
   private ModelSimReportParser(SensorContext context) {
     this.context = context;
@@ -48,8 +46,8 @@ public class ModelSimReportParser {
     new ModelSimReportParser(context).parse(xmlFile, mode);
   }
 
-  private void parse(File xmlFile, String mode) {
-    this.mode = mode;
+  private void parse(File xmlFile, String additionalReportType) {
+    this.additionalReportType = additionalReportType;
     try {
       SMInputFactory inputFactory = initStax();
       SMHierarchicCursor rootCursor = inputFactory.rootElementCursor(xmlFile);
@@ -90,7 +88,7 @@ public class ModelSimReportParser {
 
   private void collectFileData(SMInputCursor clazz, String path) throws XMLStreamException {
     InputFile resource = context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));
-    coverage = null;
+    NewCoverage coverage = null;
     boolean lineAdded = false;
     if (resourceExists(resource)) {
       coverage = context.newCoverage();
@@ -105,7 +103,7 @@ public class ModelSimReportParser {
       } catch (Exception e) {
         // FIXME: handle or rethrow exception
       }
-      if ("condition".equalsIgnoreCase(mode) && "condition".equalsIgnoreCase(name)) {
+      if ("condition".equalsIgnoreCase(additionalReportType) && "condition".equalsIgnoreCase(name)) {
         try {
           if (coverage != null) {
             int ln = Integer.parseInt(element.getAttrValue("ln"));
@@ -117,7 +115,7 @@ public class ModelSimReportParser {
           // FIXME: handle or rethrow exception
           // throw new XMLStreamException(e);
         }
-      } else if ("branch".equalsIgnoreCase(mode) && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
+      } else if ("branch".equalsIgnoreCase(additionalReportType) && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
         try {
           int active = Integer.parseInt(element.getAttrValue("active"));
           int hits = Integer.parseInt(element.getAttrValue("hits"));

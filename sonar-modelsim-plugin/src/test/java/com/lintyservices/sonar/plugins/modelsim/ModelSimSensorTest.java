@@ -90,12 +90,12 @@ public class ModelSimSensorTest {
     when(pathResolver.relativeFile(any(File.class), anyString()))
       .thenReturn(new File("notFound.xml"));
 
-    settings.setProperty(ModelSimPlugin.MODELSIM_REPORT_PATH, "notFound.xml");
+    settings.setProperty(ModelSimPlugin.REPORT_PATH, "notFound.xml");
     sensor.execute(context);
 
 
     File report = getCoverageReport();
-    settings.setProperty(ModelSimPlugin.MODELSIM_REPORT_PATH, report.getParent());
+    settings.setProperty(ModelSimPlugin.REPORT_PATH, report.getParent());
     when(pathResolver.relativeFile(any(File.class), anyString()))
       .thenReturn(report.getParentFile().getParentFile());
     sensor.execute(context);
