@@ -26,7 +26,7 @@
   <properties>
     <license.owner>Linty Services</license.owner>
     <license.mailto>mailto:contact@linty-services.com</license.mailto>
-    <sonar.version>6.7</sonar.version>
+    <sonar.version>7.9</sonar.version>
     <sonar.host.url>https://sonar.linty-services.com</sonar.host.url>
   </properties>
 
@@ -97,6 +97,11 @@
         <version>1.7.30</version>
       </dependency>
       <dependency>
+        <groupId>org.codehaus.staxmate</groupId>
+        <artifactId>staxmate</artifactId>
+        <version>2.0.1</version>
+      </dependency>
+      <dependency>
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-ws</artifactId>
         <version>${sonar.version}</version>
@@ -126,9 +131,9 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>org.easytesting</groupId>
-        <artifactId>fest-assert</artifactId>
-        <version>1.4</version>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.17.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>

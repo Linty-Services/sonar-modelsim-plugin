@@ -20,38 +20,18 @@
 package com.lintyservices.sonar.plugins.modelsim.its;
 
 import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.build.SonarScanner;
-import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import java.io.File;
 
 
 public class MetricsTest {
 
   @ClassRule
   public static final Orchestrator orchestrator = Tests.ORCHESTRATOR;
-
   private static final String PROJECT_KEY = "modelsim-metrics";
-
-  @BeforeClass
-  public static void init() {
-    SonarScanner build = Tests.createSonarScannerBuild()
-      .setProjectDir(new File("projects/metrics/"))
-      .setProjectKey(PROJECT_KEY)
-      .setProjectName(PROJECT_KEY);
-
-    Tests.resetData();
-    orchestrator.getServer().provisionProject(PROJECT_KEY, PROJECT_KEY);
-    // Tests.setProfile("empty-profile", PROJECT_KEY);
-    // orchestrator.executeBuild(build);
-  }
 
   @Test
   public void project_measures() {
-    // Just check for now that the SonarQube with the ModelSim plugin starts
-    Assert.assertTrue(true);
+    orchestrator.getServer().provisionProject(PROJECT_KEY, PROJECT_KEY);
   }
 }
