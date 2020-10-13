@@ -87,30 +87,9 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.apache.maven</groupId>
-        <artifactId>maven-project</artifactId>
-        <version>2.2.1</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>29.0-jre</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>2.6</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
-        <version>2.6</version>
-      </dependency>
-      <dependency>
-        <groupId>org.sonarsource.sonarqube</groupId>
-        <artifactId>sonar-ws</artifactId>
-        <version>${sonar.version}</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -118,9 +97,16 @@
         <version>1.7.30</version>
       </dependency>
       <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-ws</artifactId>
+        <version>${sonar.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.13</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
@@ -149,18 +135,6 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-all</artifactId>
         <version>1.10.19</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>2.21.0</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.2.3</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
