@@ -1,147 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>36</version>
-    <relativePath />
+    <version>54</version>
   </parent>
 
-  <artifactId>sonar-modelsim-plugin</artifactId>
-  <version>1.0</version>
-  <packaging>sonar-plugin</packaging>
+  <groupId>com.lintyservices.sonar.plugins.modelsim</groupId>
+  <artifactId>parent</artifactId>
+  <packaging>pom</packaging>
+  <name>SonarQube Linty ModelSim</name>
+  <version>1.4.0-SNAPSHOT</version>
+  <description>Code coverage from ModelSim report</description>
+  <url>https://www.linty-services.com</url>
 
-  <name>SonarQube Modelsim Plugin</name>
-  <description>Code coverage analysis using Modelsim</description>
-  <url>https://github.com/Linty-Services/sonar-coverage-modelsim</url>
-  <inceptionYear>2019</inceptionYear>
+  <modules>
+    <module>sonar-modelsim-plugin</module>
+    <!--See 'its' profile to activate this module-->
+    <!--<module>modelsim-its</module>-->
+  </modules>
+
+  <properties>
+    <license.owner>Linty Services</license.owner>
+    <license.mailto>mailto:contact@linty-services.com</license.mailto>
+    <sonar.version>7.9</sonar.version>
+    <sonar.host.url>https://sonar.linty-services.com</sonar.host.url>
+  </properties>
+
   <organization>
     <name>Linty Services</name>
+    <url>https://www.linty-services.com/</url>
   </organization>
+
+  <inceptionYear>2019</inceptionYear>
   <licenses>
     <license>
       <name>GNU LGPL 3</name>
       <url>http://www.gnu.org/licenses/lgpl.txt</url>
-      <distribution>repo</distribution>
     </license>
   </licenses>
 
-  <properties>
-    <license.title>SonarQube Modelsim Plugin</license.title>
-	<license.skip>true</license.skip> <!-- There is no license header for now -->
-    <sonar.version>6.7</sonar.version>
-    <!--<sonar-java.version>5.1.0.13090</sonar-java.version>-->
-	<jacoco.version>0.8.4</jacoco.version>
-  </properties>
+  <developers>
+    <developer>
+      <id>racodond</id>
+      <name>David Racodon</name>
+      <email>david.racodon@linty-services.com</email>
+      <organization>Linty Services</organization>
+      <organizationUrl>https://www.linty-services.com</organizationUrl>
+    </developer>
+    <developer>
+      <id>louisv</id>
+      <name>Vincent Louis</name>
+      <email>vincent.louis@linty-services.com</email>
+      <organization>Linty Services</organization>
+      <organizationUrl>https://www.linty-services.com</organizationUrl>
+    </developer>
+    <developer>
+      <id>rocam</id>
+      <name>Mathias Roca</name>
+      <email>mathias.roca@linty-services.com</email>
+      <organization>Linty Services</organization>
+      <organizationUrl>https://www.linty-services.com</organizationUrl>
+    </developer>
+  </developers>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
-      <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <!--<dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <version>${sonar-java.version}</version>
-      <type>sonar-plugin</type>
-      <scope>provided</scope>
-    </dependency>-->
-    <dependency>
-      <groupId>org.sonarsource.java</groupId>
-      <artifactId>sonar-java-plugin</artifactId>
-      <version>5.1.0.13090</version>
-      <scope>provided</scope>
-    </dependency>
+  <scm>
+    <connection>scm:git:github.com:Linty-Services/sonar-modelsim-plugin.git</connection>
+    <developerConnection>scm:git:github.com:Linty-Services/sonar-modelsim-plugin.git</developerConnection>
+    <url>https://github.com/Linty-Services/sonar-modelsim-plugin.git</url>
+  </scm>
 
-    <!-- http://jira.codehaus.org/browse/SONAR-2011
-    We need following dependency, otherwise we will receive compilation error
-    -->
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.2.0</version>
-      <scope>provided</scope>
-    </dependency>
+  <issueManagement>
+    <system>jira</system>
+    <url>https://s2ceh-vhdl.atlassian.net/browse/MODELSIM</url>
+  </issueManagement>
 
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>19.0</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
-      <artifactId>sonar-testing-harness</artifactId>
-      <version>${sonar.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.sonarsource.sonarqube</groupId>
-      <artifactId>sonar-plugin-api</artifactId>
-      <version>${sonar.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.easytesting</groupId>
-      <artifactId>fest-assert</artifactId>
-      <version>1.4</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
-      <scope>test</scope>
-    </dependency>
-      <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+  <dependencyManagement>
+    <dependencies>
       <dependency>
-          <groupId>org.mockito</groupId>
-          <artifactId>mockito-core</artifactId>
-          <version>2.13.0</version>
-          <scope>test</scope>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-plugin-api</artifactId>
+        <version>${sonar.version}</version>
+        <scope>provided</scope>
       </dependency>
-
       <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>0.9.30</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>29.0-jre</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.30</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.staxmate</groupId>
+        <artifactId>staxmate</artifactId>
+        <version>2.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-ws</artifactId>
+        <version>${sonar.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.orchestrator</groupId>
+        <artifactId>sonar-orchestrator</artifactId>
+        <version>3.30.0.2630</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-testing-harness</artifactId>
+        <version>${sonar.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.17.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.10.19</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
-    <finalName>${project.artifactId}</finalName>
-    <testResources>
-      <testResource>
-        <directory>${basedir}/src/main/resources</directory>
-      </testResource>
-      <testResource>
-        <directory>${basedir}/src/test/resources</directory>
-      </testResource>
-    </testResources>
     <plugins>
-     <plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
+        <version>0.8.6</version>
+        <configuration>
+          <append>true</append>
+        </configuration>
         <executions>
           <execution>
-            <id>prepare-agent</id>
+            <id>agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
@@ -153,26 +179,17 @@
               <goal>report</goal>
             </goals>
           </execution>
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-        <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <configuration>
-          <pluginKey>modelsim</pluginKey>
-          <pluginName>Modelsim</pluginName>
-          <pluginClass>org.sonar.plugins.modelsim.ModelsimPlugin</pluginClass>
-          <pluginDescription><![CDATA[Get code coverage with Modelsim</a>.]]></pluginDescription>
-        </configuration>
       </plugin>
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>its</id>
+      <modules>
+        <module>modelsim-its</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>

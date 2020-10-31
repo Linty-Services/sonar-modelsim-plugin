@@ -1,23 +1,32 @@
-# Sonar-coverage-modelsim plugin for Sonarqube & Modelsim
-===============
+# SonarQube ModelSim Plugin
 
-## Feature
-
-This plugin allows to import Modelsim xml reports data in Sonarqube.
+This plugin adds the ability to import ModelSim XML reports data into SonarQube.
 
 ## Usage
 
-### Compilation process
+### Generating Coverage Report from ModelSim
+Coverage reports must be generated in ModelSim with **Tools > Coverage Report > Text**. The **XML format** box must be ticked.
+**Code coverage > Statements**, and **Code coverage > Branches** or **Code coverage > Conditions** must be enabled
+according to the type of coverage you'd like to import into SonarQube. **Condition/Expression tables** option is necessary
+to import condition coverage. Activating unnecessary options (i.e. creating a report with both branch and condition coverage)
+will not prevent code coverage to be correctly imported.
 
-This plugin can be built with the mvn clean package install command.
- 
-### Generating coverage report
-Coverage reports must be generated in Modelsim with Tools->Coverage Report->Text. The "XML format" box must be ticked. Code coverage->Statements and Code coverage->Branches or Code coverage->Conditions must be enabled according to what type of coverage needs to be imported. "Condition/Expression tables" option is necessary for importing condition coverage.
-Activating unnecessary options (i.e. creating a report with both branch and condition coverage) will not prevent code coverage to be correctly imported.
+### Importing ModelSim Coverage Report into SonarQube
+Add the following properties to your SonarQube analysis configuration:
+* `sonar.modelsim.reportPath`: Path (absolute or relative) to ModelSim XML report file. Default value is `report.xml`.
+* `sonar.modelsim.reportMode`: Type of secondary coverage: `branch` or `condition` (branch coverage will still be 
+reported as condition coverage on the Sonarqube web interface). Statement coverage is always imported.
+Default value is `branch`.
 
-### Importing coverage report
-The report path can be set in Administration->Configuration->General Settings->Code Coverage->Modelsim tab in Sonarqube interface. Statement coverage will always be imported if available, while either branch or condition coverage can be imported by setting the "Coverage type" option. The results will be shown in the project's coverage tab in Sonarqube.
 
-## License  
-Copyright 2018-2019 Linty Services    
-Licensed under the [GNU Lesser General Public License, Version 3.0](https://www.gnu.org/licenses/lgpl.txt)
+## Build Plugin
+
+Without integration tests:
+```
+mvn clean package
+```
+
+With integration tests on SonarQube 7.9.4 version:
+```
+mvn clean verify -Pits -Dsonar.runtimeVersion=7.9.4
+```
