@@ -75,7 +75,7 @@
 
   <issueManagement>
     <system>jira</system>
-    <url>https://s2ceh-vhdl.atlassian.net/browse/MODELSIM</url>
+    <url>https://linty-services.atlassian.net/browse/MODELSIM</url>
   </issueManagement>
 
   <dependencyManagement>
