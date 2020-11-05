@@ -31,13 +31,6 @@ jobs:
         with:
           java-version: 11
 
-      - name: Cache Maven Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
       - name: Set Release Version ${{ github.event.inputs.release_version }}
         if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '7.9.4'
         run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.release_version }} -DgenerateBackupPoms=false
