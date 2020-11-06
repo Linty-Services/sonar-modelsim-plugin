@@ -1,4 +1,4 @@
-# SonarQube ModelSim Plugin
+# SonarQube Linty ModelSim Plugin
 
 This plugin adds the ability to import ModelSim XML reports data into SonarQube.
 
