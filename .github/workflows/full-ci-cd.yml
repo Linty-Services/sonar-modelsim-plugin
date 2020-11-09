@@ -88,6 +88,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: plugin
+      - name: Rename JAR into latest
+        run: mv sonar-modelsim-plugin-*.jar sonar-modelsim-plugin-latest.jar
       - name: "GitHub Pre-release: latest"
         uses: marvinpinto/action-automatic-releases@latest
         with:
