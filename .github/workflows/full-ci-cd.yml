@@ -97,7 +97,7 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: Latest build from master
-          files: sonar-modelsim-plugin-*.jar
+          files: sonar-modelsim-plugin-latest.jar
 
   release:
     name: GitHub Release
