@@ -19,7 +19,7 @@
  */
 package com.lintyservices.sonar.plugins.modelsim;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarEdition;
 import org.sonar.api.SonarQubeSide;
@@ -33,24 +33,24 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ModelSimPluginTest {
+class ModelSimPluginTest {
 
-  public static final Version LTS_VERSION = Version.create(7, 9);
+  public static final Version LTS_VERSION = Version.create(8, 9);
   private static final int EXTENSIONS = 3;
 
   @Test
-  public void should_contain_the_right_number_of_extensions() {
+  void should_contain_the_right_number_of_extensions() {
     Plugin.Context context = setupContext(SonarRuntimeImpl.forSonarQube(LTS_VERSION, SonarQubeSide.SERVER, SonarEdition.COMMUNITY));
     assertThat(context.getExtensions()).hasSize(EXTENSIONS);
   }
 
   @Test
-  public void should_contain_the_right_number_of_properties() {
+  void should_contain_the_right_number_of_properties() {
     assertThat(properties()).hasSize(2);
   }
 
   @Test
-  public void should_have_modelsim_as_category_for_properties() {
+  void should_have_modelsim_as_category_for_properties() {
     List<PropertyDefinition> properties = properties();
     assertThat(properties).isNotEmpty();
     for (PropertyDefinition propertyDefinition : properties) {
@@ -62,9 +62,9 @@ public class ModelSimPluginTest {
   }
 
   private List<PropertyDefinition> properties() {
-    List<PropertyDefinition> propertiesList = new ArrayList<>();
     List extensions = setupContext(SonarRuntimeImpl.forSonarQube(LTS_VERSION, SonarQubeSide.SERVER, SonarEdition.COMMUNITY)).getExtensions();
 
+    List<PropertyDefinition> propertiesList = new ArrayList<>();
     for (Object extension : extensions) {
       if (extension instanceof PropertyDefinition) {
         propertiesList.add((PropertyDefinition) extension);

@@ -35,7 +35,6 @@ import static org.sonar.api.utils.ParsingUtils.parseNumber;
 public class ModelSimReportParser {
 
   private final SensorContext context;
-
   private String additionalReportType;
 
   private ModelSimReportParser(SensorContext context) {
@@ -113,7 +112,6 @@ public class ModelSimReportParser {
           }
         } catch (Exception e) {
           // FIXME: handle or rethrow exception
-          // throw new XMLStreamException(e);
         }
       } else if ("branch".equalsIgnoreCase(additionalReportType) && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
         try {
@@ -130,7 +128,6 @@ public class ModelSimReportParser {
           }
         } catch (Exception e) {
           // FIXME: handle or rethrow exception
-          // throw new XMLStreamException(e);
         }
       } else if ("stmt".equalsIgnoreCase(name)) {
         try {

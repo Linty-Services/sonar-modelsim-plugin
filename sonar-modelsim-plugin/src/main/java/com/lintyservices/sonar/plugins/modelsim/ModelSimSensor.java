@@ -26,20 +26,23 @@ import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.config.Configuration;
-import org.sonar.api.config.Settings;
 import org.sonar.api.scan.filesystem.PathResolver;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ModelSimSensor implements Sensor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ModelSimSensor.class);
 
-  private FileSystem fs;
-  private PathResolver pathResolver;
+  private final FileSystem fs;
+  private final PathResolver pathResolver;
   private final Configuration configuration;
 
-  public ModelSimSensor(FileSystem fs, PathResolver pathResolver, Settings settings, Configuration configuration) {
+  public ModelSimSensor(FileSystem fs, PathResolver pathResolver, Configuration configuration) {
     this.fs = fs;
     this.pathResolver = pathResolver;
     this.configuration = configuration;
@@ -52,19 +55,42 @@ public class ModelSimSensor implements Sensor {
 
   @Override
   public void execute(SensorContext context) {
-    String path = configuration.get(ModelSimPlugin.REPORT_PATH).orElse(null);
+    Set<File> reportFiles = reportFiles();
     String mode = configuration.get(ModelSimPlugin.ADDITIONAL_REPORT_TYPE).orElse(null);
-    File report = pathResolver.relativeFile(fs.baseDir(), path);
-    if (!report.isFile() || !report.exists() || !report.canRead()) {
-      LOGGER.warn("ModelSim report not found at {}", report);
-    } else {
-      parseReport(report, context, mode);
+    for (File reportFile : reportFiles) {
+      parseReport(reportFile, context, mode);
     }
   }
 
   protected void parseReport(File xmlFile, SensorContext context, String mode) {
-    LOGGER.info("parsing {}", xmlFile);
+    LOGGER.info("[ModelSim] Parsing {}", xmlFile);
     ModelSimReportParser.parseReport(xmlFile, context, mode);
+  }
+
+  private Set<File> reportFiles() {
+    String reportPathsProperty = configuration.get(ModelSimPlugin.REPORT_PATHS).orElse(null);
+    Set<String> reportPaths = new HashSet<>();
+    if (reportPathsProperty != null) {
+      reportPaths = Arrays.stream(reportPathsProperty.split(",")).map(String::trim).collect(Collectors.toSet());
+    }
+
+    Set<File> reportFiles = new HashSet<>();
+    for (String path : reportPaths) {
+      File reportFile = pathResolver.relativeFile(fs.baseDir(), path);
+      if (!reportFile.exists()) {
+        LOGGER.warn("[ModelSim] Cannot find \"{}\" report", reportFile);
+      } else if (!reportFile.canRead()) {
+        LOGGER.warn("[ModelSim] Cannot read \"{}\" report", reportFile);
+      } else if (reportFile.isDirectory()) {
+        reportFiles.addAll(
+          Arrays.stream(reportFile.listFiles())
+            .filter(f -> f.isFile() && f.getName().endsWith(".xml"))
+            .collect(Collectors.toSet()));
+      } else if (reportFile.isFile()) {
+        reportFiles.add(reportFile);
+      }
+    }
+    return reportFiles;
   }
 
 }

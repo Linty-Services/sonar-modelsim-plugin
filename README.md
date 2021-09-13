@@ -21,7 +21,8 @@ coverage report -file report.xml -byfile -detail -all -dump -option -code {s b c
 
 ### Importing ModelSim Coverage Report into SonarQube
 Add the following properties to your SonarQube analysis configuration:
-* `sonar.modelsim.reportPath`: Path (absolute or relative) to ModelSim XML report file. Default value is `report.xml`.
+* `sonar.modelsim.reportPaths`: Comma-separated list of paths (either files or directories) to ModelSim XML report files.
+If the list contains a directory, all `.xml` files in this directory will be considered as ModelSim XML reports.
 * `sonar.modelsim.reportMode`: Type of secondary coverage: `branch` or `condition` (branch coverage will still be 
 reported as condition coverage on the Sonarqube web interface). Statement coverage is always imported.
 Default value is `branch`.

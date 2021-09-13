@@ -29,7 +29,7 @@ import java.util.List;
 
 public final class ModelSimPlugin implements Plugin {
 
-  public static final String REPORT_PATH = "sonar.modelsim.reportPath";
+  public static final String REPORT_PATHS = "sonar.modelsim.reportPaths";
 
   public static final String ADDITIONAL_REPORT_TYPE = "sonar.modelsim.additionalReportType";
 
@@ -37,12 +37,12 @@ public final class ModelSimPlugin implements Plugin {
 
   public List<Object> getExtensions() {
     return ImmutableList.of(
-      PropertyDefinition.builder(REPORT_PATH)
+      PropertyDefinition.builder(REPORT_PATHS)
         .category(CoreProperties.CATEGORY_CODE_COVERAGE)
         .subCategory(SUB_CATEGORY)
-        .name("Report Path")
-        .description("Path (absolute or relative) to ModelSim XML report file.")
-        .defaultValue("report.xml")
+        .name("Report Paths")
+        .description("Comma-separated list of paths (either files or directories) to ModelSim XML report files.\n" +
+          "If the list contains a directory, all .xml files in this directory will be considered as ModelSim XML reports.")
         .onQualifiers(Qualifiers.PROJECT)
         .build(),
       PropertyDefinition.builder(ADDITIONAL_REPORT_TYPE)
