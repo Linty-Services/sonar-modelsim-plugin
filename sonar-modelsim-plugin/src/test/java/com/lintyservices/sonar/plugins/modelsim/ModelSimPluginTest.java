@@ -19,7 +19,7 @@
  */
 package com.lintyservices.sonar.plugins.modelsim;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarEdition;
 import org.sonar.api.SonarQubeSide;
@@ -33,24 +33,24 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ModelSimPluginTest {
+public class ModelSimPluginTest {
 
   public static final Version LTS_VERSION = Version.create(8, 9);
   private static final int EXTENSIONS = 3;
 
   @Test
-  void should_contain_the_right_number_of_extensions() {
+  public void should_contain_the_right_number_of_extensions() {
     Plugin.Context context = setupContext(SonarRuntimeImpl.forSonarQube(LTS_VERSION, SonarQubeSide.SERVER, SonarEdition.COMMUNITY));
     assertThat(context.getExtensions()).hasSize(EXTENSIONS);
   }
 
   @Test
-  void should_contain_the_right_number_of_properties() {
+  public void should_contain_the_right_number_of_properties() {
     assertThat(properties()).hasSize(2);
   }
 
   @Test
-  void should_have_modelsim_as_category_for_properties() {
+  public void should_have_modelsim_as_category_for_properties() {
     List<PropertyDefinition> properties = properties();
     assertThat(properties).isNotEmpty();
     for (PropertyDefinition propertyDefinition : properties) {
