@@ -15,7 +15,7 @@ to import condition coverage. Do not activate other unnecessary options such as 
 
 #### Command Line
 Here's an example of command line:
-```
+```bash
 coverage report -file report.xml -byfile -detail -all -dump -option -code {s b c} –xml
 ```
 
@@ -31,11 +31,31 @@ Default value is `branch`.
 ## Build Plugin
 
 Without integration tests:
-```
+```bash
 mvn clean package
 ```
 
-With integration tests on SonarQube 7.9.4 version:
+With integration tests on SonarQube 9.7.0.61563 version:
+```bash
+mvn clean verify -Pits -Dsonar.runtimeVersion=9.7.0.61563 
 ```
-mvn clean verify -Pits -Dsonar.runtimeVersion=7.9.4
+
+Update license headers:
+```bash
+mvn license:format -Pits
+```
+
+## Update All Dependencies
+```bash
+# Check for Maven dependencies to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-dependency-updates -Pits
+
+# Check for Maven plugins to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-plugin-updates -Pits
+
+# Check for versions in properties to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-property-updates -Pits
+
+# Update parent POM
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:update-parent
 ```
