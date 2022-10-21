@@ -39,3 +39,18 @@ With integration tests on SonarQube 7.9.4 version:
 ```
 mvn clean verify -Pits -Dsonar.runtimeVersion=7.9.4
 ```
+
+## Update All Dependencies
+```bash
+# Check for Maven dependencies to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-dependency-updates -Pits
+
+# Check for Maven plugins to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-plugin-updates -Pits
+
+# Check for versions in properties to update
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-property-updates -Pits
+
+# Update parent POM
+mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:update-parent
+```
