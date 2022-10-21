@@ -74,9 +74,14 @@
   </scm>
 
   <issueManagement>
-    <system>jira</system>
-    <url>https://linty-services.atlassian.net/browse/MODELSIM</url>
+    <system>GitHub Issues</system>
+    <url>https://github.com/Linty-Services/sonar-modelsim-plugin/issues</url>
   </issueManagement>
+
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/Linty-Services/sonar-modelsim-plugin/actions</url>
+  </ciManagement>
 
   <dependencyManagement>
     <dependencies>

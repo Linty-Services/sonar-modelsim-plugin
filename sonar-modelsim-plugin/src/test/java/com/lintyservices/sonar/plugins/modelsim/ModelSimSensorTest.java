@@ -1,6 +1,6 @@
 /*
  * SonarQube Linty ModelSim :: Plugin
- * Copyright (C) 2019-2021 Linty Services
+ * Copyright (C) 2019-2022 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -38,8 +38,6 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertThrows;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 

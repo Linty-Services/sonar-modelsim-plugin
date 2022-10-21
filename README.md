@@ -15,7 +15,7 @@ to import condition coverage. Do not activate other unnecessary options such as 
 
 #### Command Line
 Here's an example of command line:
-```
+```bash
 coverage report -file report.xml -byfile -detail -all -dump -option -code {s b c} –xml
 ```
 
@@ -31,13 +31,18 @@ Default value is `branch`.
 ## Build Plugin
 
 Without integration tests:
-```
+```bash
 mvn clean package
 ```
 
-With integration tests on SonarQube 7.9.4 version:
+With integration tests on SonarQube 9.7.0.61563 version:
+```bash
+mvn clean verify -Pits -Dsonar.runtimeVersion=9.7.0.61563 
 ```
-mvn clean verify -Pits -Dsonar.runtimeVersion=7.9.4
+
+Update license headers:
+```bash
+mvn license:format -Pits
 ```
 
 ## Update All Dependencies
