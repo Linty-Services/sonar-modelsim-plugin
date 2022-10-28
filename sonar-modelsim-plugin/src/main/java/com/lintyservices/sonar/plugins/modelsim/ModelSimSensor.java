@@ -68,7 +68,6 @@ public class ModelSimSensor implements Sensor {
   }
 
   private Set<File> reportFiles() {
-    System.out.println("here3");
     String reportPathsProperty = configuration.get(ModelSimPlugin.REPORT_PATHS).orElse(null);
     Set<String> reportPaths = new HashSet<>();
     if (reportPathsProperty != null) {
