@@ -125,7 +125,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: "GitHub Release: ${{ github.event.inputs.release_version }}"
+      - name: "GitHub Release: latest"
         uses: ncipollo/release-action@v1
         with:
           tag: latest
