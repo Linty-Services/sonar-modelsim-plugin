@@ -11,7 +11,7 @@
 
   <artifactId>modelsim-its</artifactId>
   <packaging>pom</packaging>
-  <name>SonarQube Linty ModelSim :: Integration Tests</name>
+  <name>Linty ModelSim :: Integration Tests</name>
 
   <modules>
     <module>plugin</module>

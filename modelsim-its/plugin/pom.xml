@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>modelsim-its-plugin</artifactId>
-  <name>SonarQube Linty ModelSim :: Integration Tests :: Plugin</name>
+  <name>Linty ModelSim :: Integration Tests :: Plugin</name>
 
   <properties>
     <surefire.argLine>-server</surefire.argLine>

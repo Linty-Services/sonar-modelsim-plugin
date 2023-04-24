@@ -1,5 +1,5 @@
 /*
- * SonarQube Linty ModelSim :: Plugin
+ * Linty ModelSim :: Plugin
  * Copyright (C) 2019-2023 Linty Services
  * mailto:contact@linty-services.com
  *

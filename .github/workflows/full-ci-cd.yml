@@ -16,10 +16,8 @@ on:
 jobs:
   build:
     name: Build on Commit
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        sonarqube: [ 9.9.0.65466 ]
 
     steps:
       - name: Git Checkout
@@ -34,19 +32,18 @@ jobs:
           distribution: temurin
 
       - name: Set Release Version ${{ github.event.inputs.release_version }}
-        if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '9.9.0.65466'
+        if: github.event_name == 'workflow_dispatch'
         run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.release_version }} -DgenerateBackupPoms=false
 
-      - name: Build and Test against SonarQube ${{ matrix.sonarqube }}
-        run: mvn -B clean verify -Pits -"Dsonar.runtimeVersion=${{ matrix.sonarqube }}"
+      - name: Build and Test
+        run: mvn -B clean verify -Pits -"Dsonar.runtimeVersion=${{ vars.SONAR_VERSION }}"
 
       - name: Run SonarQube Analysis
-        if: contains(github.ref, 'main') && matrix.sonarqube == '9.9.0.65466'
+        if: contains(github.ref, 'main')
         run: mvn -B sonar:sonar -Dsonar.login=${{ secrets.SONARQUBE_SCANNER_FOR_PRIVATE_REPOSITORIES_TOKEN }}
 
       - name: Upload Plugin JAR
-        if: matrix.sonarqube == '9.9.0.65466'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: plugin
           path: |
@@ -54,7 +51,7 @@ jobs:
             !sonar-modelsim-plugin/target/sonar-modelsim-plugin-*-sources.jar
 
       - name: Commit, Push and Tag Release Version ${{ github.event.inputs.release_version }}
-        if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '9.9.0.65466'
+        if: github.event_name == 'workflow_dispatch'
         uses: EndBug/add-and-commit@v9
         with:
           add: '*'
@@ -66,15 +63,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Release Commit Hash
-        if: matrix.sonarqube == '9.9.0.65466'
         run: echo $(git rev-parse HEAD) >> release_commit.txt
 
       - name: Set Next Development Cycle Version ${{ github.event.inputs.next_version }}
-        if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '9.9.0.65466'
+        if: github.event_name == 'workflow_dispatch'
         run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.next_version }} -DgenerateBackupPoms=false
 
       - name: Commit and Push Next Development Cycle Version ${{ github.event.inputs.next_version }}
-        if: github.event_name == 'workflow_dispatch' && matrix.sonarqube == '9.9.0.65466'
+        if: github.event_name == 'workflow_dispatch'
         uses: EndBug/add-and-commit@v9
         with:
           add: '*'
@@ -85,11 +81,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Latest Commit Hash
-        if: matrix.sonarqube == '9.9.0.65466'
         run: echo $(git rev-parse HEAD) >> latest_commit.txt
 
       - name: Upload Commit Hashes
-        if: matrix.sonarqube == '9.9.0.65466'
         uses: actions/upload-artifact@v3
         with:
           name: commits
@@ -152,7 +146,7 @@ jobs:
           name: commits
 
       - name: Read Release Commit Hash
-        run: echo "RELEASE_COMMIT=$(cat release_commit.txt)" >> $GITHUB_ENV
+        run: echo "RELEASE_COMMIT=$(head -n 1  release_commit.txt)" >> $GITHUB_ENV
 
       - name: "GitHub Release: ${{ github.event.inputs.release_version }}"
         uses: ncipollo/release-action@v1
@@ -163,7 +157,7 @@ jobs:
           commit: ${{ env.RELEASE_COMMIT }}
 
       - name: "Close Milestone ${{ github.event.inputs.release_version }}"
-        uses: Akkjon/close-milestone@v2
+        uses: Akkjon/close-milestone@v2.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
