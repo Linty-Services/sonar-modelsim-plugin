@@ -125,7 +125,6 @@ jobs:
           tag: latest
           artifacts: sonar-modelsim-plugin-latest.jar
           name: Latest build from main
-          prerelease: true
           commit: ${{ env.LATEST_COMMIT }}
 
   release:
