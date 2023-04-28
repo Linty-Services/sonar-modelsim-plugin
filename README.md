@@ -77,5 +77,3 @@ mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:update-parent
 * Update `sonar.api.version` property in [pom.xml](pom.xml):
   See https://github.com/SonarSource/sonar-plugin-api/releases. Make sure that the version of the API is included in
   Sonar version.
-* Update version
-  in [Tests](modelsim-its/plugin/src/test/java/com/lintyservices/sonar/plugins/modelsim/its/Tests.java)
