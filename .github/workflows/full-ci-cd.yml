@@ -15,7 +15,7 @@ on:
 
 jobs:
   build-lts:
-    name: Build on Commit
+    name: Build against LTS
     timeout-minutes: 10
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
