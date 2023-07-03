@@ -13,7 +13,7 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Linty ModelSim QuestaSim</name>
-  <version>1.12.0</version>
+  <version>1.13.0-SNAPSHOT</version>
   <description>Code coverage from ModelSim QuestaSim report</description>
   <url>https://www.linty-services.com</url>
 
