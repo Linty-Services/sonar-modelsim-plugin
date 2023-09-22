@@ -43,10 +43,10 @@ Without integration tests:
 mvn clean package
 ```
 
-With integration tests on SonarQube 9.7.0.61563 version:
+With integration tests:
 
 ```bash
-mvn clean verify -Pits -Dsonar.runtimeVersion=9.7.0.61563 
+mvn clean verify -Pits
 ```
 
 Update license headers:
