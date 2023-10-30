@@ -1,5 +1,5 @@
 /*
- * Linty ModelSim :: Integration Tests :: Plugin
+ * Linty ModelSim / QuestaSim :: Integration Tests
  * Copyright (C) 2019-2023 Linty Services
  * mailto:contact@linty-services.com
  *
@@ -19,23 +19,16 @@
  */
 package com.lintyservices.sonar.plugins.modelsim.its;
 
-import com.sonar.orchestrator.Orchestrator;
-import com.sonar.orchestrator.locator.FileLocation;
-import org.junit.ClassRule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import com.sonar.orchestrator.junit5.OrchestratorExtension;
+import org.junit.jupiter.api.Test;
 
-import java.io.File;
+class MetricsTest {
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-  MetricsTest.class,
-})
-public class Tests {
+  private static final OrchestratorExtension ORCHESTRATOR = InitOrchestratorExtension.ORCHESTRATOR;
+  private static final String PROJECT_KEY = "modelsim-metrics";
 
-  @ClassRule
-  public static final Orchestrator ORCHESTRATOR = Orchestrator.builderEnv()
-    .setSonarVersion(System.getProperty("sonar.runtimeVersion", "LATEST_RELEASE"))
-    .addPlugin(FileLocation.byWildcardMavenFilename(new File("../../sonar-modelsim-plugin/target"), "sonar-modelsim-plugin-*.jar"))
-    .build();
+  @Test
+  void project_measures() {
+    ORCHESTRATOR.getServer().provisionProject(PROJECT_KEY, PROJECT_KEY);
+  }
 }

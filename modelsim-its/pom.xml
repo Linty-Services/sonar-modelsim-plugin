@@ -10,11 +10,18 @@
   </parent>
 
   <artifactId>modelsim-its</artifactId>
-  <packaging>pom</packaging>
-  <name>Linty ModelSim :: Integration Tests</name>
+  <name>Linty ModelSim / QuestaSim :: Integration Tests</name>
 
-  <modules>
-    <module>plugin</module>
-  </modules>
-
+  <dependencies>
+    <dependency>
+      <groupId>org.sonarsource.orchestrator</groupId>
+      <artifactId>sonar-orchestrator-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

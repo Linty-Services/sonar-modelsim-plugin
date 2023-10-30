@@ -19,8 +19,9 @@
  */
 package com.lintyservices.sonar.plugins.modelsim;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.FilePredicates;
@@ -37,11 +38,10 @@ import org.sonar.api.scan.filesystem.PathResolver;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ModelSimSensorTest {
+class ModelSimSensorTest {
 
   @Mock
   private SensorContext context;
@@ -60,8 +60,8 @@ public class ModelSimSensorTest {
   @Mock
   private NewCoverage newCoverage;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     initMocks(this);
 
     when(context.fileSystem()).thenReturn(fs);
@@ -73,22 +73,25 @@ public class ModelSimSensorTest {
   }
 
   @Test
-  public void shouldNotFailIfReportNotSpecifiedOrNotFound() throws URISyntaxException {
+  void do_not_fail_if_report_not_found() {
     ModelSimSensor sensor;
 
     Configuration configuration = new MapSettings().setProperty(ModelSimPlugin.REPORT_PATHS, "notFound.xml").asConfig();
     sensor = new ModelSimSensor(fs, pathResolver, configuration);
     when(pathResolver.relativeFile(any(File.class), anyString())).thenReturn(new File("notFound.xml"));
     sensor.execute(context);
+  }
 
+  @Test
+  void do_not_fail_if_report_property_not_set() throws URISyntaxException {
     File report = getCoverageReport();
-    sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
+    ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
     when(pathResolver.relativeFile(any(File.class), anyString())).thenReturn(report.getParentFile().getParentFile());
     sensor.execute(context);
   }
 
   @Test
-  public void collectFileLineCoverage() throws URISyntaxException {
+  void collect_line_coverage() throws URISyntaxException {
     ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
     when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
     sensor.parseReport(getCoverageReport(), context, "branch");
@@ -101,7 +104,7 @@ public class ModelSimSensorTest {
 
 
   @Test
-  public void testDoNotSaveMeasureOnResourceWhichDoesntExistInTheContext() throws URISyntaxException {
+  void do_not_save_measure_on_files_that_do_not_exist() throws URISyntaxException {
     ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
     when(fs.inputFile(predicate)).thenReturn(null);
     sensor.parseReport(getCoverageReport(), context, "branch");
@@ -109,7 +112,7 @@ public class ModelSimSensorTest {
   }
 
   @Test
-  public void vhdlFileHasNoCoverageSoAddedAFakeOneToShowAsCovered() throws URISyntaxException {
+  void vhdlFileHasNoCoverageSoAddedAFakeOneToShowAsCovered() throws URISyntaxException {
     ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
     File nullCoverage = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/null-coverage.xml").toURI());
     when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
@@ -119,12 +122,8 @@ public class ModelSimSensorTest {
     verify(newCoverage, times(1)).save();
   }
 
-  private File getCoverageReport() throws URISyntaxException {
-    return new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/commons-chain-coverage.xml").toURI());
-  }
-
   @Test
-  public void shouldExecuteOnlyOnVhdlFiles() {
+  void execute_on_vhdl_files_only() {
     ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
     SensorDescriptor descriptor = mock(SensorDescriptor.class);
     when(descriptor.onlyOnLanguage(anyString())).thenReturn(descriptor);
@@ -136,25 +135,35 @@ public class ModelSimSensorTest {
   }
 
   @Test
-  public void testInvalidXml() {
-    Exception thrown = assertThrows(
+  void invalid_xml() {
+    ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
+
+    Exception thrown = Assertions.assertThrows(
       IllegalStateException.class,
       () -> {
-        ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
         File badXml = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/badFile.xml").toURI());
         sensor.parseReport(badXml, context, "branch");
       });
+
+    Assertions.assertEquals("XML is not valid", thrown.getMessage());
   }
 
   @Test
-  public void testInvalidReport() {
-    Exception thrown = assertThrows(
+  void invalid_report() {
+    ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
+
+    Exception thrown = Assertions.assertThrows(
       IllegalStateException.class, () -> {
-        ModelSimSensor sensor = new ModelSimSensor(fs, pathResolver, new MapSettings().asConfig());
         File badReport = new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/badFile.xml").toURI());
         when(context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(anyString()))).thenReturn(inputFile);
         sensor.parseReport(badReport, context, "branch");
-      });
+      }
+    );
+
+    Assertions.assertEquals("XML is not valid", thrown.getMessage());
   }
 
+  private File getCoverageReport() throws URISyntaxException {
+    return new File(getClass().getResource("/com/lintyservices/sonar/plugins/modelsim/ModelSimSensorTest/commons-chain-coverage.xml").toURI());
+  }
 }
