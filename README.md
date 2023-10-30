@@ -68,7 +68,7 @@ mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-plugin-updates -Pits
 mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:display-property-updates -Pits
 
 # Update parent POM
-mvn org.codehaus.mojo:versions-maven-plugin:2.12.0:update-parent
+# Check https://mvnrepository.com/artifact/org.sonarsource.parent/parent
 ```
 
 ### Update Sonar Version
