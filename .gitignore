@@ -10,3 +10,5 @@ sonar-project.properties
 
 release_commit.txt
 latest_commit.txt
+
+.linty/
