@@ -35,7 +35,7 @@ jobs:
         run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.release_version }} -DgenerateBackupPoms=false
 
       - name: Build and Test
-        run: mvn -B clean verify -Pits -"Dsonar.runtimeVersion=${{ vars.SONAR_VERSION }}"
+        run: mvn -B clean verify -Pits
 
       - name: Run SonarQube Analysis
         if: contains(github.ref, 'main')

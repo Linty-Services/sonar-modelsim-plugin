@@ -51,6 +51,7 @@ public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionCo
       .builderEnv()
       .useDefaultAdminCredentialsForBuilds(true)
       .setSonarVersion(System.getProperty("sonar.runtimeVersion", "LATEST_RELEASE"))
+      .setOrchestratorProperty("orchestrator.artifactory.url", "https://repo1.maven.org/maven2")
       .addPlugin(FileLocation.byWildcardMavenFilename(
         new File("../sonar-modelsim-plugin/target"),
         "sonar-modelsim-plugin-*.jar")
