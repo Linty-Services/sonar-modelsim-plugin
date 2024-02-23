@@ -31,8 +31,8 @@ Add the following properties to your SonarQube analysis configuration:
 * `sonar.modelsim.reportPaths`: Comma-separated list of paths (either files or directories) to ModelSim/QuestaSim XML
   report files. If the list contains a directory, all `.xml` files in this directory will be considered as
   ModelSim/QuestaSim XML reports.
-* `sonar.modelsim.reportMode`: Type of secondary coverage: `branch` or `condition` (branch coverage will still be
-  reported as condition coverage on the Sonarqube web interface). Statement coverage is always imported. Default value
+* `sonar.modelsim.additionalReportType`: Type of secondary coverage: `branch` or `condition` (branch coverage will still be
+  reported as condition coverage on the SonarQube web interface). Statement coverage is always imported. Default value
   is `branch`.
 
 ## Build Plugin
