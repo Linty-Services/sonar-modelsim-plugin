@@ -23,22 +23,36 @@ import com.sonar.orchestrator.build.SonarScannerInstaller;
 import com.sonar.orchestrator.junit5.OrchestratorExtension;
 import com.sonar.orchestrator.locator.FileLocation;
 import com.sonar.orchestrator.version.Version;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
 
   public static OrchestratorExtension ORCHESTRATOR;
   private static final String SONAR_SCANNER_VERSION = "5.0.1.3006";
+  private static volatile boolean started = false;
+  private static final Lock LOCK = new ReentrantLock();
 
-  @BeforeAll
+  @Override
   public void beforeAll(ExtensionContext context) {
-    initOrchestrator();
-    installScanner(ORCHESTRATOR, "target");
+    LOCK.lock();
+    try {
+      if (!started) {
+        started = true;
+        initOrchestrator();
+        installScanner(ORCHESTRATOR, "target");
+        context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("initOrchestratorExtension", this);
+      }
+    } catch (Exception e) {
+      throw new IllegalStateException("Could not init orchestrators", e);
+    } finally {
+      LOCK.unlock();
+    }
   }
 
   @Override

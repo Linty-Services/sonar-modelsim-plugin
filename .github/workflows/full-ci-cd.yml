@@ -39,9 +39,10 @@ jobs:
 
       - name: Run SonarQube Analysis
         if: contains(github.ref, 'main')
-        run: mvn -B sonar:sonar -Dsonar.login=${{ secrets.SONARQUBE_SCANNER_FOR_PRIVATE_REPOSITORIES_TOKEN }}
+        run: mvn -B sonar:sonar -Dsonar.token=${{ secrets.SONARQUBE_SCANNER_FOR_PRIVATE_REPOSITORIES_TOKEN }}
 
       - name: Upload Plugin JAR
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v3
         with:
           name: plugin
@@ -62,6 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Release Commit Hash
+        if: github.event_name == 'workflow_dispatch'
         run: echo $(git rev-parse HEAD) >> release_commit.txt
 
       - name: Set Next Development Cycle Version ${{ github.event.inputs.next_version }}
@@ -79,52 +81,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get Latest Commit Hash
-        run: echo $(git rev-parse HEAD) >> latest_commit.txt
-
       - name: Upload Commit Hashes
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v3
         with:
           name: commits
-          path: |
-            release_commit.txt
-            latest_commit.txt
-
-  pre-release:
-    name: GitHub Pre-release
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    needs: build
-    if: contains(github.ref, 'main')
-    steps:
-      - name: Download Plugin JAR
-        uses: actions/download-artifact@v3
-        with:
-          name: plugin
-
-      - name: Rename JAR into latest
-        run: mv sonar-modelsim-plugin-*.jar sonar-modelsim-plugin-latest.jar
-
-      - name: Download Commit Hashes
-        uses: actions/download-artifact@v3
-        with:
-          name: commits
-
-      - name: Read Latest Commit Hash
-        run: echo "LATEST_COMMIT=$(cat latest_commit.txt)" >> $GITHUB_ENV
-
-      - name: Delete latest Release
-        run: gh release delete latest -R Linty-Services/sonar-modelsim-plugin --cleanup-tag -y
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: "GitHub Release: latest"
-        uses: ncipollo/release-action@v1
-        with:
-          tag: latest
-          artifacts: sonar-modelsim-plugin-latest.jar
-          name: Latest build from main
-          commit: ${{ env.LATEST_COMMIT }}
+          path: release_commit.txt
 
   release:
     name: GitHub Release
