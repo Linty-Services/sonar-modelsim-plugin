@@ -12,7 +12,7 @@
   <artifactId>sonar-modelsim-plugin</artifactId>
   <packaging>sonar-plugin</packaging>
   <name>Linty ModelSim :: Plugin</name>
-  <url>https://www.linty-services.com</url>
+  <url>https://linty-services.com</url>
 
   <dependencies>
     <dependency>
