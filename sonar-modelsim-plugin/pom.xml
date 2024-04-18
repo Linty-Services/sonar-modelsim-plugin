@@ -54,11 +54,13 @@
       <plugin>
         <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
         <artifactId>sonar-packaging-maven-plugin</artifactId>
-        <version>1.21.0.505</version>
+        <version>1.23.0.740</version>
         <configuration>
           <pluginName>Linty ModelSim / QuestaSim</pluginName>
           <pluginClass>com.lintyservices.sonar.plugins.modelsim.ModelSimPlugin</pluginClass>
           <sonarQubeMinVersion>${sonar.api.version}</sonarQubeMinVersion>
+          <jreMinVersion>17</jreMinVersion>
+          <requiredForLanguages>hdl,vhdl,verilog</requiredForLanguages>
         </configuration>
       </plugin>
     </plugins>
