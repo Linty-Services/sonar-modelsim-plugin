@@ -30,6 +30,11 @@ jobs:
           java-version: 17
           distribution: temurin
 
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.9
+
       - name: Set Release Version ${{ github.event.inputs.release_version }}
         if: github.event_name == 'workflow_dispatch'
         run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.release_version }} -DgenerateBackupPoms=false

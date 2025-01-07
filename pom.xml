@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.sonarsource.parent</groupId>
     <artifactId>parent</artifactId>
-    <version>71.0.0.1292</version>
+    <version>83.0.0.2369</version>
   </parent>
 
   <groupId>com.lintyservices.sonar.plugins.modelsim</groupId>
@@ -24,8 +24,8 @@
   </modules>
 
   <properties>
-    <sonar.version>10.2.1.78527</sonar.version>
-    <sonar.api.version>10.1.0.809</sonar.api.version>
+    <sonar.version>25.1.0.102122</sonar.version>
+    <sonar.api.version>11.0.0.2664</sonar.api.version>
     <license.owner>Linty Services</license.owner>
     <license.mailto>mailto:contact@linty-services.com</license.mailto>
     <sonar.host.url>https://demo.linty-services.com</sonar.host.url>
@@ -89,7 +89,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.1.0-jre</version>
+        <version>33.4.0-jre</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.staxmate</groupId>
@@ -106,7 +106,7 @@
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-api</artifactId>
-        <version>5.10.2</version>
+        <version>5.11.4</version>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.sonarqube</groupId>
@@ -117,18 +117,18 @@
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>
         <artifactId>sonar-orchestrator-junit5</artifactId>
-        <version>4.9.0.1920</version>
+        <version>5.1.0.2254</version>
       </dependency>
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
-        <version>3.25.3</version>
+        <version>3.27.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.11.0</version>
+        <version>5.15.2</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -140,7 +140,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.5.0</version>
           <executions>
             <execution>
               <id>enforce-versions</id>
@@ -150,7 +150,7 @@
               <configuration>
                 <rules>
                   <requireMavenVersion>
-                    <version>3.8</version>
+                    <version>3.9.9</version>
                   </requireMavenVersion>
                 </rules>
               </configuration>
@@ -164,7 +164,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.13.0</version>
         <configuration>
           <release>17</release>
           <encoding>UTF-8</encoding>
@@ -177,9 +177,34 @@
       </plugin>
 
       <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>4.6</version>
+        <configuration>
+          <licenseSets>
+            <licenseSet>
+              <header>LICENSE</header>
+              <includes>
+                <include>src/*/java/**/*.java</include>
+              </includes>
+            </licenseSet>
+          </licenseSets>
+        </configuration>
+        <executions>
+          <execution>
+            <id>enforce-license-headers</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.10</version>
+        <version>0.8.12</version>
         <configuration>
           <append>true</append>
         </configuration>

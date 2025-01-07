@@ -1,6 +1,5 @@
 /*
- * Linty ModelSim / QuestaSim :: Integration Tests
- * Copyright (C) 2019-2024 Linty Services
+ * Copyright (C) 2019-2025 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -77,6 +76,6 @@ public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionCo
 
   private static void installScanner(OrchestratorExtension orchestrator, String path) {
     new SonarScannerInstaller(orchestrator.getConfiguration().locators())
-      .install(Version.create(SONAR_SCANNER_VERSION), null, Path.of(path).toFile(), false);
+      .install(Version.create(SONAR_SCANNER_VERSION), null, Path.of(path).toFile());
   }
 }
