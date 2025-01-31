@@ -31,9 +31,39 @@ Add the following properties to your SonarQube analysis configuration:
 * `sonar.modelsim.reportPaths`: Comma-separated list of paths (either files or directories) to ModelSim/QuestaSim XML
   report files. If the list contains a directory, all `.xml` files in this directory will be considered as
   ModelSim/QuestaSim XML reports.
-* `sonar.modelsim.additionalReportType`: Type of secondary coverage: `branch` or `condition` (branch coverage will still be
+* `sonar.modelsim.additionalReportType`: Type of secondary coverage: `branch` or `condition` (branch coverage will still
+  be
   reported as condition coverage on the SonarQube web interface). Statement coverage is always imported. Default value
   is `branch`.
+
+Make sure that file paths in XML reports (`fileData > path`) match file paths in Linty.
+If not, update your continuous integration process to update paths in XML reports to match paths in Linty.
+
+For instance, `./src/cpu/control.vhd` in below XML report:
+
+```xml
+<?xml version="1.0"?>
+<coverage_report>
+<code_coverage_report
+lines="1"
+byFile="1">
+
+  <fileData path="./src/cpu/control.vhd">
+    <statements active="2" hits="1" percent="50.00"/>
+    <stmt ln="31" st="1" hits="4961097"/>
+    <stmt ln="35" st="1" hits="3307396"/>
+    <branches active="13" hits="5" percent="38.46"/>
+  </fileData>
+
+  ...
+```
+
+matches file path in Linty:
+
+![Coverage](./doc/coverage.png)
+
+See project sample
+at [https://demo.linty-services.com/dashboard?id=modelsim-coverage](https://demo.linty-services.com/dashboard?id=modelsim-coverage)
 
 ## Build Plugin
 
