@@ -44,18 +44,18 @@ For instance, `./src/cpu/control.vhd` in below XML report:
 ```xml
 <?xml version="1.0"?>
 <coverage_report>
-<code_coverage_report
-lines="1"
-byFile="1">
+  <code_coverage_report
+    lines="1"
+    byFile="1">
 
-  <fileData path="./src/cpu/control.vhd">
-    <statements active="2" hits="1" percent="50.00"/>
-    <stmt ln="31" st="1" hits="4961097"/>
-    <stmt ln="35" st="1" hits="3307396"/>
-    <branches active="13" hits="5" percent="38.46"/>
-  </fileData>
+    <fileData path="./src/cpu/control.vhd">
+      <statements active="2" hits="1" percent="50.00"/>
+      <stmt ln="31" st="1" hits="4961097"/>
+      <stmt ln="35" st="1" hits="3307396"/>
+      <branches active="13" hits="5" percent="38.46"/>
+    </fileData>
 
-  ...
+    ...
 ```
 
 matches file path in Linty:
@@ -64,6 +64,12 @@ matches file path in Linty:
 
 See project sample
 at [https://demo.linty-services.com/dashboard?id=modelsim-coverage](https://demo.linty-services.com/dashboard?id=modelsim-coverage)
+
+## Compatibility Matrix
+
+| ModelSim/QuestaSim Plugin | SonarQube Community     |
+|---------------------------|-------------------------|
+| 4.0.1                     | 10.7.0 -> 25.2.0.102705 |
 
 ## Build Plugin
 
