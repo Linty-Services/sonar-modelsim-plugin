@@ -69,7 +69,7 @@ at [https://demo.linty-services.com/dashboard?id=modelsim-coverage](https://demo
 
 | ModelSim/QuestaSim Plugin | SonarQube Community     |
 |---------------------------|-------------------------|
-| 4.0.1                     | 10.7.0 -> 25.2.0.102705 |
+| 1.12.0                    | 10.7.0 -> 25.2.0.102705 |
 
 ## Build Plugin
 
