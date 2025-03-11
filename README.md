@@ -67,9 +67,9 @@ at [https://demo.linty-services.com/dashboard?id=modelsim-coverage](https://demo
 
 ## Compatibility Matrix
 
-| ModelSim/QuestaSim Plugin | SonarQube Community     |
-|---------------------------|-------------------------|
-| 1.12.0                    | 10.7.0 -> 25.2.0.102705 |
+| ModelSim/QuestaSim Plugin | SonarQube Community |
+|---------------------------|---------------------|
+| 1.13.0                    | 25.3.0.104237       |
 
 ## Build Plugin
 
