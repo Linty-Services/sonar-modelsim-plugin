@@ -58,7 +58,7 @@
         <configuration>
           <pluginName>Linty ModelSim / QuestaSim</pluginName>
           <pluginClass>com.lintyservices.sonar.plugins.modelsim.ModelSimPlugin</pluginClass>
-          <jreMinVersion>17</jreMinVersion>
+          <jreMinVersion>21</jreMinVersion>
           <requiredForLanguages>hdl,vhdl,verilog</requiredForLanguages>
         </configuration>
       </plugin>
