@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
 
   public static OrchestratorExtension ORCHESTRATOR;
-  private static final String SONAR_SCANNER_VERSION = "6.2.1.4610";
+  private static final String SONAR_SCANNER_VERSION = "7.3.0.5189";
   private static volatile boolean started = false;
   private static final Lock LOCK = new ReentrantLock();
 
@@ -63,7 +63,7 @@ public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionCo
     ORCHESTRATOR = OrchestratorExtension
       .builderEnv()
       .useDefaultAdminCredentialsForBuilds(true)
-      .setSonarVersion(System.getProperty("sonar.runtimeVersion", "25.3.0.104237"))
+      .setSonarVersion(System.getProperty("sonar.runtimeVersion", "25.10.0.114319"))
       .setOrchestratorProperty("orchestrator.artifactory.url", "https://repo1.maven.org/maven2")
       .addPlugin(FileLocation.byWildcardMavenFilename(
         new File("../sonar-modelsim-plugin/target"),
