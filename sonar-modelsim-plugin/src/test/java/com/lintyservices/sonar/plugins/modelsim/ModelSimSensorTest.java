@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2025 Linty Services
+ * Copyright (C) 2019-2026 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -38,7 +38,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 class ModelSimSensorTest {
 
@@ -48,8 +48,6 @@ class ModelSimSensorTest {
   private PathResolver pathResolver;
   @Mock
   private InputFile inputFile;
-  @Mock
-  private File file;
   @Mock
   private FileSystem fs;
   @Mock
@@ -61,12 +59,10 @@ class ModelSimSensorTest {
 
   @BeforeEach
   void setUp() {
-    initMocks(this);
+    openMocks(this);
 
     when(context.fileSystem()).thenReturn(fs);
     when(fs.predicates()).thenReturn(predicates);
-    when(inputFile.file()).thenReturn(file);
-    when(predicates.is(file)).thenReturn(predicate);
     when(fs.inputFile(predicate)).thenReturn(inputFile);
     when(context.newCoverage()).thenReturn(newCoverage);
   }

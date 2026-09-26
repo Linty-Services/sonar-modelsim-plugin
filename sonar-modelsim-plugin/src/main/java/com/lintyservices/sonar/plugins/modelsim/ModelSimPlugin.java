@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2025 Linty Services
+ * Copyright (C) 2019-2026 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -22,7 +22,6 @@ import com.google.common.collect.ImmutableList;
 import org.sonar.api.CoreProperties;
 import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
-import org.sonar.api.resources.Qualifiers;
 
 import java.util.List;
 
@@ -42,7 +41,7 @@ public final class ModelSimPlugin implements Plugin {
         .name("Report Paths")
         .description("Comma-separated list of paths (either files or directories) to ModelSim XML report files.\n" +
           "If the list contains a directory, all .xml files in this directory will be considered as ModelSim XML reports.")
-        .onQualifiers(Qualifiers.PROJECT)
+        .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
         .build(),
       PropertyDefinition.builder(ADDITIONAL_REPORT_TYPE)
         .category(CoreProperties.CATEGORY_CODE_COVERAGE)
@@ -51,7 +50,7 @@ public final class ModelSimPlugin implements Plugin {
         .description("Statement coverage is always imported. Choose additional coverage to import on top of it: 'branch' or 'condition'. "
           + "This additional coverage is imported as 'condition coverage' on the SonarQube web interface.")
         .defaultValue("branch")
-        .onQualifiers(Qualifiers.PROJECT)
+        .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
         .build(),
       ModelSimSensor.class);
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2025 Linty Services
+ * Copyright (C) 2019-2026 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -74,7 +74,7 @@ public class ModelSimReportParser {
   }
 
   private boolean resourceExists(InputFile file) {
-    return file != null && context.fileSystem().inputFile(context.fileSystem().predicates().is(file.file())) != null;
+    return file != null;
   }
 
   private void collectFileMeasures(SMInputCursor clazz) throws XMLStreamException {

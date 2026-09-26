@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2025 Linty Services
+ * Copyright (C) 2019-2026 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@ package com.lintyservices.sonar.plugins.modelsim.its;
 import com.sonar.orchestrator.build.SonarScannerInstaller;
 import com.sonar.orchestrator.junit5.OrchestratorExtension;
 import com.sonar.orchestrator.locator.FileLocation;
-import com.sonar.orchestrator.version.Version;
+import com.sonar.orchestrator.util.Version;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -30,10 +30,11 @@ import java.nio.file.Path;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionContext.Store.CloseableResource {
+public class InitOrchestratorExtension implements BeforeAllCallback, AutoCloseable {
 
   public static OrchestratorExtension ORCHESTRATOR;
-  private static final String SONAR_SCANNER_VERSION = "7.3.0.5189";
+  private static final String SONAR_SCANNER_VERSION = "8.1.0.6389";
+  private static final String SONAR_VERSION = "26.9.0.129388";
   private static volatile boolean started = false;
   private static final Lock LOCK = new ReentrantLock();
 
@@ -63,7 +64,7 @@ public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionCo
     ORCHESTRATOR = OrchestratorExtension
       .builderEnv()
       .useDefaultAdminCredentialsForBuilds(true)
-      .setSonarVersion(System.getProperty("sonar.runtimeVersion", "25.10.0.114319"))
+      .setSonarVersion(System.getProperty("sonar.runtimeVersion", SONAR_VERSION))
       .setOrchestratorProperty("orchestrator.artifactory.url", "https://repo1.maven.org/maven2")
       .addPlugin(FileLocation.byWildcardMavenFilename(
         new File("../sonar-modelsim-plugin/target"),
@@ -75,7 +76,7 @@ public class InitOrchestratorExtension implements BeforeAllCallback, ExtensionCo
   }
 
   private static void installScanner(OrchestratorExtension orchestrator, String path) {
-    new SonarScannerInstaller(orchestrator.getConfiguration().locators())
-      .install(Version.create(SONAR_SCANNER_VERSION), null, Path.of(path).toFile());
+    new SonarScannerInstaller(orchestrator.getLocators())
+      .install(Version.create(SONAR_SCANNER_VERSION), Path.of(path).toFile());
   }
 }

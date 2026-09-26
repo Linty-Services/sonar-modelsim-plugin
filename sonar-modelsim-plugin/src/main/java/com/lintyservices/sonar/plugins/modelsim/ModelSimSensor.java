@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2025 Linty Services
+ * Copyright (C) 2019-2026 Linty Services
  * mailto:contact@linty-services.com
  *
  * This program is free software; you can redistribute it and/or
@@ -22,10 +22,10 @@ import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.scan.filesystem.PathResolver;
-import org.sonar.api.utils.log.Logger;
-import org.sonar.api.utils.log.Loggers;
 
 import java.io.File;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 
 public class ModelSimSensor implements Sensor {
 
-  private static final Logger LOG = Loggers.get(ModelSimSensor.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ModelSimSensor.class);
 
   private final FileSystem fs;
   private final PathResolver pathResolver;
