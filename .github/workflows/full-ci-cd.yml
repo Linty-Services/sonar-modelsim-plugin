@@ -44,7 +44,7 @@ jobs:
 
       - name: Run SonarQube Analysis
         if: contains(github.ref, 'main')
-        run: mvn -B sonar:sonar -Dsonar.token=${{ secrets.SONARQUBE_SCANNER_FOR_PRIVATE_REPOSITORIES_TOKEN }}
+        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.token=${{ secrets.SONARQUBE_SCANNER_FOR_PRIVATE_REPOSITORIES_TOKEN }}
 
       - name: Deploy
         if: github.event_name == 'workflow_dispatch'
