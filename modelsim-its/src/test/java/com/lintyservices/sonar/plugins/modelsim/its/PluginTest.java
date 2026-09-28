@@ -18,16 +18,31 @@
  */
 package com.lintyservices.sonar.plugins.modelsim.its;
 
-import com.sonar.orchestrator.junit5.OrchestratorExtension;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-class MetricsTest {
+import com.lintyservices.testharness.Orchestrator;
+import com.sonar.orchestrator.junit5.OrchestratorExtension;
+import com.sonar.orchestrator.locator.FileLocation;
 
-  private static final OrchestratorExtension ORCHESTRATOR = InitOrchestratorExtension.ORCHESTRATOR;
-  private static final String PROJECT_KEY = "modelsim-metrics";
+class PluginTest {
+
+  @RegisterExtension
+  static final OrchestratorExtension ORCHESTRATOR = Orchestrator.createOrchestratorExtensionBuilder()
+    .addPlugin(FileLocation.byWildcardMavenFilename(new File("../sonar-modelsim-plugin/target"), "sonar-modelsim-plugin-*.jar"))
+    .build();
 
   @Test
-  void project_measures() {
-    ORCHESTRATOR.getServer().provisionProject(PROJECT_KEY, PROJECT_KEY);
+  void sonar_modelsim_plugin_is_installed() {
+    String body = ORCHESTRATOR.getServer()
+      .newHttpCall("api/plugins/installed")
+      .setAdminCredentials()
+      .execute()
+      .getBodyAsString();
+    assertThat(body).contains("\"key\":\"modelsim\"");
   }
 }

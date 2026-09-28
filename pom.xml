@@ -48,6 +48,7 @@
   <properties>
     <sonar.version>26.1.0.118079</sonar.version>
     <sonar.api.version>13.4.3.4290</sonar.api.version>
+    <linty.test.harness.version>1.0.0</linty.test.harness.version>
     <license.owner>Linty Services</license.owner>
     <license.mailto>mailto:contact@linty-services.com</license.mailto>
     <sonar.host.url>https://demo.linty-services.com</sonar.host.url>
@@ -146,6 +147,11 @@
         <groupId>org.sonarsource.sonarqube</groupId>
         <artifactId>sonar-plugin-api-impl</artifactId>
         <version>${sonar.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.lintyservices</groupId>
+        <artifactId>test-harness</artifactId>
+        <version>${linty.test.harness.version}</version>
       </dependency>
       <dependency>
         <groupId>org.sonarsource.orchestrator</groupId>

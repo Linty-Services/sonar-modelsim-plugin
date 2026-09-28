@@ -41,6 +41,9 @@ jobs:
 
       - name: Build and Test
         run: mvn -B clean verify -Pits
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_PACKAGE }}
+          LINTY_TEST_LICENSE: ${{ secrets.LINTY_TEST_LICENSE }}
 
       - name: Run SonarQube Analysis
         if: contains(github.ref, 'main')
