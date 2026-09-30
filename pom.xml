@@ -19,7 +19,7 @@
 
   <groupId>com.lintyservices.sonar.plugins.modelsim</groupId>
   <artifactId>parent</artifactId>
-  <version>1.15.0-SNAPSHOT</version>
+  <version>1.15.0</version>
   <packaging>pom</packaging>
   <name>Linty ModelSim / QuestaSim</name>
   <description>Code coverage from ModelSim / QuestaSim report</description>
