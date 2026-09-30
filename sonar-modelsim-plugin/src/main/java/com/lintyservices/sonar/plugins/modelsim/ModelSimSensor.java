@@ -1,37 +1,25 @@
 /*
- * Copyright (C) 2019-2026 Linty Services
- * mailto:contact@linty-services.com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * This confidential and proprietary software may be used only as authorized
+ * by a licensing agreement from Linty Services.
+ * (c) Copyright 2016-2026 Linty Services
+ * ALL RIGHTS RESERVED
+ * The entire notice above must be reproduced on all authorized copies.
  */
 package com.lintyservices.sonar.plugins.modelsim;
-
-import org.sonar.api.batch.fs.FileSystem;
-import org.sonar.api.batch.sensor.Sensor;
-import org.sonar.api.batch.sensor.SensorContext;
-import org.sonar.api.batch.sensor.SensorDescriptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.sonar.api.config.Configuration;
-import org.sonar.api.scan.filesystem.PathResolver;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.sonar.api.batch.fs.FileSystem;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.api.config.Configuration;
+import org.sonar.api.scan.filesystem.PathResolver;
 
 public class ModelSimSensor implements Sensor {
 
@@ -70,7 +58,10 @@ public class ModelSimSensor implements Sensor {
     String reportPathsProperty = configuration.get(ModelSimPlugin.REPORT_PATHS).orElse(null);
     Set<String> reportPaths = new HashSet<>();
     if (reportPathsProperty != null) {
-      reportPaths = Arrays.stream(reportPathsProperty.split(",")).map(String::trim).collect(Collectors.toSet());
+      reportPaths =
+          Arrays.stream(reportPathsProperty.split(","))
+              .map(String::trim)
+              .collect(Collectors.toSet());
     }
 
     Set<File> reportFiles = new HashSet<>();
@@ -82,14 +73,13 @@ public class ModelSimSensor implements Sensor {
         LOG.warn("[ModelSim] Cannot read \"{}\" report", path);
       } else if (reportFile.isDirectory()) {
         reportFiles.addAll(
-          Arrays.stream(reportFile.listFiles())
-            .filter(f -> f.isFile() && f.getName().endsWith(".xml"))
-            .collect(Collectors.toSet()));
+            Arrays.stream(reportFile.listFiles())
+                .filter(f -> f.isFile() && f.getName().endsWith(".xml"))
+                .collect(Collectors.toSet()));
       } else if (reportFile.isFile()) {
         reportFiles.add(reportFile);
       }
     }
     return reportFiles;
   }
-
 }

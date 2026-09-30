@@ -1,35 +1,23 @@
 /*
- * Copyright (C) 2019-2026 Linty Services
- * mailto:contact@linty-services.com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * This confidential and proprietary software may be used only as authorized
+ * by a licensing agreement from Linty Services.
+ * (c) Copyright 2016-2026 Linty Services
+ * ALL RIGHTS RESERVED
+ * The entire notice above must be reproduced on all authorized copies.
  */
 package com.lintyservices.sonar.plugins.modelsim;
 
+import static org.sonar.api.utils.ParsingUtils.parseNumber;
+
+import java.io.File;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import org.codehaus.staxmate.SMInputFactory;
 import org.codehaus.staxmate.in.SMHierarchicCursor;
 import org.codehaus.staxmate.in.SMInputCursor;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import java.io.File;
-
-import static org.sonar.api.utils.ParsingUtils.parseNumber;
 
 public class ModelSimReportParser {
 
@@ -85,7 +73,8 @@ public class ModelSimReportParser {
   }
 
   private void collectFileData(SMInputCursor clazz, String path) throws XMLStreamException {
-    InputFile resource = context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));
+    InputFile resource =
+        context.fileSystem().inputFile(context.fileSystem().predicates().hasPath(path));
     NewCoverage coverage = null;
     boolean lineAdded = false;
     if (resourceExists(resource)) {
@@ -101,18 +90,23 @@ public class ModelSimReportParser {
       } catch (Exception e) {
         // FIXME: handle or rethrow exception
       }
-      if ("condition".equalsIgnoreCase(additionalReportType) && "condition".equalsIgnoreCase(name)) {
+      if ("condition".equalsIgnoreCase(additionalReportType)
+          && "condition".equalsIgnoreCase(name)) {
         try {
           if (coverage != null) {
             int ln = Integer.parseInt(element.getAttrValue("ln"));
             coverage.lineHits(ln, 1);
-            coverage.conditions(ln, Integer.parseInt(element.getAttrValue("active")), Integer.parseInt(element.getAttrValue("hits")));
+            coverage.conditions(
+                ln,
+                Integer.parseInt(element.getAttrValue("active")),
+                Integer.parseInt(element.getAttrValue("hits")));
             lineAdded = true;
           }
         } catch (Exception e) {
           // FIXME: handle or rethrow exception
         }
-      } else if ("branch".equalsIgnoreCase(additionalReportType) && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
+      } else if ("branch".equalsIgnoreCase(additionalReportType)
+          && ("case".equalsIgnoreCase(name) || "if".equalsIgnoreCase(name))) {
         try {
           int active = Integer.parseInt(element.getAttrValue("active"));
           int hits = Integer.parseInt(element.getAttrValue("hits"));
@@ -142,7 +136,8 @@ public class ModelSimReportParser {
     }
 
     if (coverage != null) {
-      // If there was no lines covered or uncovered (e.g. everything is ignored), but the file exists then Sonar would report the file as uncovered
+      // If there was no lines covered or uncovered (e.g. everything is ignored), but the file
+      // exists then Sonar would report the file as uncovered
       // so adding a fake one to line number 1
       if (!lineAdded) {
         coverage.lineHits(1, 1);

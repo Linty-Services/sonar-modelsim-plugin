@@ -18,6 +18,8 @@ jobs:
     name: Build on Commit
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.DEPLOY_PACKAGE }}
     steps:
       - name: Git Checkout
         uses: actions/checkout@v4
@@ -42,7 +44,6 @@ jobs:
       - name: Build and Test
         run: mvn -B clean verify -Pits
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_PACKAGE }}
           LINTY_TEST_LICENSE: ${{ secrets.LINTY_TEST_LICENSE }}
 
       - name: Run SonarQube Analysis
@@ -52,8 +53,6 @@ jobs:
       - name: Deploy
         if: github.event_name == 'workflow_dispatch'
         run: mvn -B deploy -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_PACKAGE }}
 
       - name: Upload Plugin JAR
         if: github.event_name == 'workflow_dispatch'
@@ -73,8 +72,6 @@ jobs:
           author_email: github-actions@linty-services.com
           message: Release version ${{ github.event.inputs.release_version }}
           tag: ${{ github.event.inputs.release_version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Release Commit Hash
         if: github.event_name == 'workflow_dispatch'
@@ -92,8 +89,6 @@ jobs:
           author_name: GitHub Actions
           author_email: github-actions@linty-services.com
           message: Bump version to ${{ github.event.inputs.next_version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Commit Hashes
         if: github.event_name == 'workflow_dispatch'

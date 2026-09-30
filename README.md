@@ -28,10 +28,10 @@ coverage report -file report.xml -byfile -detail -all -dump -option -code {s b c
 
 Add the following properties to your SonarQube analysis configuration:
 
-* `sonar.modelsim.reportPaths`: Comma-separated list of paths (either files or directories) to ModelSim/QuestaSim XML
+- `sonar.modelsim.reportPaths`: Comma-separated list of paths (either files or directories) to ModelSim/QuestaSim XML
   report files. If the list contains a directory, all `.xml` files in this directory will be considered as
   ModelSim/QuestaSim XML reports.
-* `sonar.modelsim.additionalReportType`: Type of secondary coverage: `branch` or `condition` (branch coverage will still
+- `sonar.modelsim.additionalReportType`: Type of secondary coverage: `branch` or `condition` (branch coverage will still
   be
   reported as condition coverage on the SonarQube web interface). Statement coverage is always imported. Default value
   is `branch`.
@@ -68,7 +68,7 @@ at [https://demo.linty-services.com/dashboard?id=modelsim-coverage](https://demo
 ## Compatibility Matrix
 
 | ModelSim/QuestaSim Plugin | SonarQube Community |
-|---------------------------|---------------------|
+| ------------------------- | ------------------- |
 | 1.14.0                    | 26.1.0.118079       |
 | 1.13.0                    | 25.3.0.104237       |
 
@@ -92,25 +92,9 @@ Update license headers:
 mvn license:format -Pits
 ```
 
-## Update All Dependencies
+## Format code with spotless:
 
 ```bash
-# Check for Maven dependencies to update
-mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates -Pits
-
-# Check for Maven plugins to update
-mvn org.codehaus.mojo:versions-maven-plugin:display-plugin-updates -Pits
-
-# Check for versions in properties to update
-mvn org.codehaus.mojo:versions-maven-plugin:display-property-updates -Pits
-
-# Update parent POM
-# Check https://mvnrepository.com/artifact/org.sonarsource.parent/parent
+mvn spotless:check -Pits
+mvn spotless:apply -Pits
 ```
-
-### Update Sonar Version
-
-* Update `sonar.version` property in [pom.xml](pom.xml): Sonar version
-* Update `sonar.api.version` property in [pom.xml](pom.xml):
-  See https://github.com/SonarSource/sonar-plugin-api/releases. Make sure that the version of the API is included in
-  Sonar version.

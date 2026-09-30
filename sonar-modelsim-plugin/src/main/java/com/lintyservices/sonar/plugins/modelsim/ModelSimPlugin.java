@@ -1,29 +1,17 @@
 /*
- * Copyright (C) 2019-2026 Linty Services
- * mailto:contact@linty-services.com
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * This confidential and proprietary software may be used only as authorized
+ * by a licensing agreement from Linty Services.
+ * (c) Copyright 2016-2026 Linty Services
+ * ALL RIGHTS RESERVED
+ * The entire notice above must be reproduced on all authorized copies.
  */
 package com.lintyservices.sonar.plugins.modelsim;
 
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import org.sonar.api.CoreProperties;
 import org.sonar.api.Plugin;
 import org.sonar.api.config.PropertyDefinition;
-
-import java.util.List;
 
 public final class ModelSimPlugin implements Plugin {
 
@@ -35,24 +23,26 @@ public final class ModelSimPlugin implements Plugin {
 
   public List<Object> getExtensions() {
     return ImmutableList.of(
-      PropertyDefinition.builder(REPORT_PATHS)
-        .category(CoreProperties.CATEGORY_CODE_COVERAGE)
-        .subCategory(SUB_CATEGORY)
-        .name("Report Paths")
-        .description("Comma-separated list of paths (either files or directories) to ModelSim XML report files.\n" +
-          "If the list contains a directory, all .xml files in this directory will be considered as ModelSim XML reports.")
-        .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
-        .build(),
-      PropertyDefinition.builder(ADDITIONAL_REPORT_TYPE)
-        .category(CoreProperties.CATEGORY_CODE_COVERAGE)
-        .subCategory(SUB_CATEGORY)
-        .name("Additional Coverage Type")
-        .description("Statement coverage is always imported. Choose additional coverage to import on top of it: 'branch' or 'condition'. "
-          + "This additional coverage is imported as 'condition coverage' on the SonarQube web interface.")
-        .defaultValue("branch")
-        .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
-        .build(),
-      ModelSimSensor.class);
+        PropertyDefinition.builder(REPORT_PATHS)
+            .category(CoreProperties.CATEGORY_CODE_COVERAGE)
+            .subCategory(SUB_CATEGORY)
+            .name("Report Paths")
+            .description(
+                "Comma-separated list of paths (either files or directories) to ModelSim XML report files.\n"
+                    + "If the list contains a directory, all .xml files in this directory will be considered as ModelSim XML reports.")
+            .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
+            .build(),
+        PropertyDefinition.builder(ADDITIONAL_REPORT_TYPE)
+            .category(CoreProperties.CATEGORY_CODE_COVERAGE)
+            .subCategory(SUB_CATEGORY)
+            .name("Additional Coverage Type")
+            .description(
+                "Statement coverage is always imported. Choose additional coverage to import on top of it: 'branch' or 'condition'. "
+                    + "This additional coverage is imported as 'condition coverage' on the SonarQube web interface.")
+            .defaultValue("branch")
+            .onConfigScopes(PropertyDefinition.ConfigScope.PROJECT)
+            .build(),
+        ModelSimSensor.class);
   }
 
   @Override
